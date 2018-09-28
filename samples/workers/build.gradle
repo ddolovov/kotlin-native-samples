@@ -9,22 +9,22 @@ repositories {
 }
 kotlin {
     targets {
-        fromPreset(presets.findByName(KonanTargetKt.getPresetName(HostManager.host)), 'csvParser')
-        configure([csvParser]) {
+        fromPreset(presets.findByName(KonanTargetKt.getPresetName(HostManager.host)), 'workers')
+        configure([workers]) {
             compilations.main.outputKinds('EXECUTABLE')
-            compilations.main.entryPoint = 'sample.csvparser.main'
+            compilations.main.entryPoint = 'sample.workers.main'
         }
     }
 }
 
 task runProgram {
     def buildType = 'release' // Change to "debug" to run application with debug symbols.
-    dependsOn "link${buildType.capitalize()}ExecutableCsvParser"
+    dependsOn "link${buildType.capitalize()}ExecutableWorkers"
     doLast {
-        def programFile = kotlin.targets.csvParser.compilations.main.getBinary('EXECUTABLE', buildType)
+        def programFile = kotlin.targets.workers.compilations.main.getBinary('EXECUTABLE', buildType)
         exec {
             executable programFile
-            args = ['./European_Mammals_Red_List_Nov_2009.csv', '4', '100']
+            args = []
         }
     }
 }

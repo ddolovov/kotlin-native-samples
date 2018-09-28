@@ -12,8 +12,8 @@ if defined KONAN_HOME (
 
 if "%TARGET%" == "" set TARGET=mingw
 
-set OUTPUT_DIR="%DIR%\build\bin\csvParser\main\release\executable"
+set OUTPUT_DIR="%DIR%\build\bin\workers\main\release\executable"
 mkdir "%OUTPUT_DIR%"
 
-call konanc -target "%TARGET%" -entry sample.csvparser.main "%DIR%\src" -o "%OUTPUT_DIR%\csvparser.exe"
+call konanc -target "%TARGET%" -entry sample.workers.main "%DIR%\src" -o "%OUTPUT_DIR%\workers.exe"
 exit /b %ERRORLEVEL%

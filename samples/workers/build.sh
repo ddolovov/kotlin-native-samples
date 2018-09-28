@@ -20,14 +20,14 @@ LINKER_ARGS=${!var}
 var=COMPILER_ARGS_${TARGET}
 COMPILER_ARGS=${!var} # add -opt for an optimized build.
 
-OUTPUT_DIR=$DIR/build/bin/csvParser/main/release/executable
+OUTPUT_DIR=$DIR/build/bin/workers/main/release/executable
 mkdir -p $OUTPUT_DIR
 
 kotlinc-native \
     $COMPILER_ARGS \
     -target $TARGET \
-    -entry sample.csvparser.main \
-    -o $OUTPUT_DIR/csvparser \
+    -entry sample.workers.main \
+    -o $OUTPUT_DIR/workers \
     $DIR/src || exit 1
 
-echo "Artifact path is $OUTPUT_DIR/csvparser.$SUFFIX"
+echo "Artifact path is $OUTPUT_DIR/workers.$SUFFIX"
