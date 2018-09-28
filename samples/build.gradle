@@ -1,0 +1,46 @@
+import org.jetbrains.kotlin.konan.target.HostManager
+
+buildscript {
+    ext.kotlin_version = '1.3.0-rc-116'
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    }
+}
+
+// A short-cut to set up a Kotlin/Native source set:
+def setUpSourceSet(subproject, String alias, String entryPoint) {
+    subproject.kotlin {
+        targets {
+            fromPreset(defaultPreset(subproject), alias) {
+                compilations.main.outputKinds('EXECUTABLE')
+                compilations.main.entryPoint = entryPoint
+            }
+        }
+    }
+}
+
+// Determine Kotlin/Native preset based on host OS:
+def defaultPreset(subproject) {
+    def hostOs = System.getProperty('os.name')
+    switch (hostOs) {
+        case 'Mac OS X': return subproject.kotlin.presets.macosX64
+        case 'Linux': return subproject.kotlin.presets.linuxX64
+        case { it.startsWith('Windows') }: return subproject.kotlin.presets.mingwX64
+        default: throw new Exception("This host OS is not supported in Kotlin/Native samples: $hostOs")
+    }
+}

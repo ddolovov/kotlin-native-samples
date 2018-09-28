@@ -8,9 +8,14 @@ pluginManagement {
     }
 
     repositories {
-        maven { url 'http://oss.sonatype.org/content/repositories/snapshots' }
         mavenCentral()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
         maven { url 'https://plugins.gradle.org/m2/' }
     }
 }
-rootProject.name = 'workers'
+
+enableFeaturePreview('GRADLE_METADATA')
+
+include ':csvparser'
+include ':workers'

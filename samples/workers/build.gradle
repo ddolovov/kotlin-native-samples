@@ -1,21 +1,8 @@
-import org.jetbrains.kotlin.konan.target.*
-
 plugins {
-    id 'kotlin-multiplatform' version '1.3-SNAPSHOT'
+    id 'kotlin-multiplatform'
 }
-repositories {
-    maven { url 'http://oss.sonatype.org/content/repositories/snapshots' }
-    mavenCentral()
-}
-kotlin {
-    targets {
-        fromPreset(presets.findByName(KonanTargetKt.getPresetName(HostManager.host)), 'workers')
-        configure([workers]) {
-            compilations.main.outputKinds('EXECUTABLE')
-            compilations.main.entryPoint = 'sample.workers.main'
-        }
-    }
-}
+
+setUpSourceSet(this, 'workers', 'sample.workers.main')
 
 task runProgram {
     def buildType = 'release' // Change to "debug" to run application with debug symbols.
