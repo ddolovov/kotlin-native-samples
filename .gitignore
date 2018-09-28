@@ -1,3 +1,9 @@
-/dist
-.gradle
+*.iml
+.gradle/
 build/
+.idea/
+.DS_STORE
+local.properties
+
+# exclude this from Kotlin/Native repository:
+/dist
