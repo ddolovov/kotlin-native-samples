@@ -1,6 +1,6 @@
 # Workers
 
- This example shows how one could implement computation offload to other workers
+This example shows how one could implement computation offload to other workers
 (usually mapped to OS threads) and transfer data back and forth between workers.
 Idea of workers is to avoid most common problems with concurrent programming, related
 to simultaneous computations on the same data. Instead, each object belongs to
@@ -19,7 +19,7 @@ The transfer is implemented with the function `execute()` having the following s
              producer: () -> T1,
              @VolatileLambda job: (T1) -> T2): Future<T2>
 
-  Kotlin/Native runtime invokes `producer()` function, and makes sure object it produces
+Kotlin/Native runtime invokes `producer()` function, and makes sure object it produces
 have a property, that no external references to subgraph rooted by this object, exists.
 If property doesn't hold, either (depending on `mode` argument) exception is being thrown
 or program may crash unexpectedly.
@@ -29,7 +29,7 @@ is being created. Once worker peeks the job from the queue, it executes stateles
 with object provided, and stores stable pointer to result in future's data. Whenever
 future is being consumed, object is passed to the consumer's callback.
 
- This particular example starts several workers, and gives them some computational jobs.
+This particular example starts several workers, and gives them some computational jobs.
 Then it continues execution, and waits on future objects encapsulating the
 computation results. Afterwards, worker execution termination is requested with the
 `requestTermination()` operation.
