@@ -19,3 +19,4 @@ enableFeaturePreview('GRADLE_METADATA')
 
 include ':csvparser'
 include ':workers'
+include ':gitchurn'

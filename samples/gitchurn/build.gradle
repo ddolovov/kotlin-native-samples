@@ -1,0 +1,44 @@
+plugins {
+    id 'kotlin-multiplatform'
+}
+
+kotlin {
+    sourceSets {
+        gitChurn
+
+        macosMain { dependsOn gitChurn }
+        linuxMain { dependsOn gitChurn }
+    }
+
+    targets {
+        fromPreset(presets.linuxX64, 'linux') {
+            compilations.main.cinterops {
+                libgit2 {
+                    includeDirs.headerFilterOnly '/usr/include'
+                }
+            }
+        }
+
+        fromPreset(presets.macosX64, 'macos') {
+            compilations.main.cinterops {
+                libgit2 {
+                    includeDirs.headerFilterOnly '/opt/local/include', '/usr/local/include'
+                }
+            }
+        }
+
+        configure([linux, macos]) {
+            compilations.main.outputKinds('EXECUTABLE')
+            compilations.main.entryPoint = 'sample.gitchurn.main'
+            compilations.main.cinterops {
+                libgit2 {
+                    defFile 'src/gitChurn/c_interop/libgit2.def'
+                }
+            }
+        }
+
+        createRunTask(this, 'runProgram', [linux, macos].find { it.publishable }) {
+            args '.'
+        }
+    }
+}

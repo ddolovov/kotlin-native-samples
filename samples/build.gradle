@@ -22,33 +22,24 @@ allprojects {
     }
 }
 
-// A short-cut to add a Kotlin/Native source set:
-def addSourceSet(subproject, String alias, String entryPoint) {
-    subproject.kotlin {
-        targets {
-            fromPreset(defaultPreset(subproject), alias) {
-                compilations.main.outputKinds('EXECUTABLE')
-                compilations.main.entryPoint = entryPoint
-            }
-        }
-    }
-}
+// A shorty-cut for evaluation .def file path based on the source set.
+def defFilePath(def sourceSet, String defFileName) {
+    if (java.nio.file.Paths.get(defFileName).isAbsolute())
+        return defFileName
 
-// Determine Kotlin/Native preset based on host OS:
-def defaultPreset(subproject) {
-    def hostOs = System.getProperty('os.name')
-    switch (hostOs) {
-        case 'Mac OS X': return subproject.kotlin.presets.macosX64
-        case 'Linux': return subproject.kotlin.presets.linuxX64
-        case { it.startsWith('Windows') }: return subproject.kotlin.presets.mingwX64
-        default: throw new Exception("This host OS is not supported in Kotlin/Native samples: $hostOs")
-    }
+    return java.nio.file.Paths.get('src', "${alias}Main", 'c_interop', defFileName).toString()
 }
 
 // A short-cut to add a Kotlin/Native run task.
-class RunKotlinNativeProgram extends DefaultTask {
+def createRunTask(def subproject, String name, def target, Closure configureClosure = {}) {
+    def task = subproject.tasks.create(name, RunKotlinNativeTask, subproject, target)
+    task.configure(configureClosure)
+    return task
+}
+
+class RunKotlinNativeTask extends DefaultTask {
     private final def myProject
-    private String myAlias
+    private final def myTarget
 
     String buildType = 'release'
     private List<String> myArgs = []
@@ -58,29 +49,23 @@ class RunKotlinNativeProgram extends DefaultTask {
     }
 
     @javax.inject.Inject
-    RunKotlinNativeProgram(def project, String alias) {
+    RunKotlinNativeTask(def project, def target) {
         this.myProject = project
-        this.myAlias = alias
+        this.myTarget = target
     }
 
     Task configure(Closure configureClosure) {
         super.configure(configureClosure)
-        this.dependsOn("link${buildType.capitalize()}Executable${myAlias.capitalize()}")
+        this.dependsOn("link${buildType.capitalize()}Executable${myTarget.targetName.capitalize()}")
     }
 
     @TaskAction
     void run() {
-        def programFile = myProject.kotlin.targets[myAlias].compilations.main.getBinary('EXECUTABLE', buildType)
+        def programFile = myTarget.compilations.main.getBinary('EXECUTABLE', buildType)
         def arguments = myArgs
         myProject.exec {
             executable programFile
             args arguments
         }
     }
-}
-
-def createRunTask(subproject, String name, String alias, Closure configureClosure = {}) {
-    def task = subproject.tasks.create(name, RunKotlinNativeProgram, subproject, alias)
-    task.configure(configureClosure)
-    return task
 }
