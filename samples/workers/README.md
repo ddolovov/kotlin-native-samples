@@ -15,9 +15,11 @@ between workers, as long, as they do not refer to objects, having external refer
 
 The transfer is implemented with the function `execute()` having the following signature
 
-    fun <T1, T2> execute(mode: TransferMode,
-             producer: () -> T1,
-             @VolatileLambda job: (T1) -> T2): Future<T2>
+    fun <T1, T2> execute(
+            mode: TransferMode,
+            producer: () -> T1,
+            @VolatileLambda job: (T1) -> T2
+    ): Future<T2>
 
 Kotlin/Native runtime invokes `producer()` function, and makes sure object it produces
 have a property, that no external references to subgraph rooted by this object, exists.
