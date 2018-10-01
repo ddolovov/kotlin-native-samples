@@ -38,7 +38,7 @@ kotlin {
         }
 
         createRunTask(this, 'runProgram', [linux, macos].find { it.publishable }) {
-            args '.'
+            args this.getRootProject().getRootDir()
         }
     }
 }

@@ -36,6 +36,8 @@ Then it continues execution, and waits on future objects encapsulating the
 computation results. Afterwards, worker execution termination is requested with the
 `requestTermination()` operation.
 
-To build use `./build.sh` or `../gradlew assemble`
+To build use `../gradlew assemble` or `./build.sh`.
 
-To run use `./build/bin/workers/main/release/executable/workers.kexe`
+To run use `../gradlew runProgram` or execute the program directly:
+
+    ./build/bin/<platform>/main/release/executable/workers.kexe
