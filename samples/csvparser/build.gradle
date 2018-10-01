@@ -2,16 +2,8 @@ plugins {
     id 'kotlin-multiplatform'
 }
 
-setUpSourceSet(this, 'csvParser', 'sample.csvparser.main')
+addSourceSet(this, 'csvParser', 'sample.csvparser.main')
 
-task runProgram {
-    def buildType = 'release' // Change to "debug" to run application with debug symbols.
-    dependsOn "link${buildType.capitalize()}ExecutableCsvParser"
-    doLast {
-        def programFile = kotlin.targets.csvParser.compilations.main.getBinary('EXECUTABLE', buildType)
-        exec {
-            executable programFile
-            args = ['./European_Mammals_Red_List_Nov_2009.csv', '4', '100']
-        }
-    }
+createRunTask(this, 'runProgram', 'csvParser') {
+    args './European_Mammals_Red_List_Nov_2009.csv', 4, 100
 }

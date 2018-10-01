@@ -22,8 +22,8 @@ allprojects {
     }
 }
 
-// A short-cut to set up a Kotlin/Native source set:
-def setUpSourceSet(subproject, String alias, String entryPoint) {
+// A short-cut to add a Kotlin/Native source set:
+def addSourceSet(subproject, String alias, String entryPoint) {
     subproject.kotlin {
         targets {
             fromPreset(defaultPreset(subproject), alias) {
@@ -43,4 +43,44 @@ def defaultPreset(subproject) {
         case { it.startsWith('Windows') }: return subproject.kotlin.presets.mingwX64
         default: throw new Exception("This host OS is not supported in Kotlin/Native samples: $hostOs")
     }
+}
+
+// A short-cut to add a Kotlin/Native run task.
+class RunKotlinNativeProgram extends DefaultTask {
+    private final def myProject
+    private String myAlias
+
+    String buildType = 'release'
+    private List<String> myArgs = []
+
+    void args(Object... args) {
+        this.myArgs = args.each { it.toString() }
+    }
+
+    @javax.inject.Inject
+    RunKotlinNativeProgram(def project, String alias) {
+        this.myProject = project
+        this.myAlias = alias
+    }
+
+    Task configure(Closure configureClosure) {
+        super.configure(configureClosure)
+        this.dependsOn("link${buildType.capitalize()}Executable${myAlias.capitalize()}")
+    }
+
+    @TaskAction
+    void run() {
+        def programFile = myProject.kotlin.targets[myAlias].compilations.main.getBinary('EXECUTABLE', buildType)
+        def arguments = myArgs
+        myProject.exec {
+            executable programFile
+            args arguments
+        }
+    }
+}
+
+def createRunTask(subproject, String name, String alias, Closure configureClosure = {}) {
+    def task = subproject.tasks.create(name, RunKotlinNativeProgram, subproject, alias)
+    task.configure(configureClosure)
+    return task
 }

@@ -2,16 +2,6 @@ plugins {
     id 'kotlin-multiplatform'
 }
 
-setUpSourceSet(this, 'workers', 'sample.workers.main')
+addSourceSet(this, 'workers', 'sample.workers.main')
 
-task runProgram {
-    def buildType = 'release' // Change to "debug" to run application with debug symbols.
-    dependsOn "link${buildType.capitalize()}ExecutableWorkers"
-    doLast {
-        def programFile = kotlin.targets.workers.compilations.main.getBinary('EXECUTABLE', buildType)
-        exec {
-            executable programFile
-            args = []
-        }
-    }
-}
+createRunTask(this, 'runProgram', 'workers')
