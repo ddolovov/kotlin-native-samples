@@ -40,4 +40,4 @@ To build use `../gradlew assemble` or `./build.sh`.
 
 To run use `../gradlew runProgram` or execute the program directly:
 
-    ./build/bin/<platform>/main/release/executable/workers.kexe
+    ./build/bin/workers/main/release/executable/workers.kexe

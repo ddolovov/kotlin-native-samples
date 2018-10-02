@@ -22,12 +22,33 @@ allprojects {
     }
 }
 
-// A shorty-cut for evaluation .def file path based on the source set.
-def defFilePath(def sourceSet, String defFileName) {
-    if (java.nio.file.Paths.get(defFileName).isAbsolute())
-        return defFileName
+// A short-cut for evaluation of the default host Kotlin/Native preset.
+def defaultHostPreset(
+        def subproject,
+        Object whitelist = [subproject.kotlin.presets.macosX64, subproject.kotlin.presets.linuxX64, subproject.kotlin.presets.mingwX64]) {
 
-    return java.nio.file.Paths.get('src', "${alias}Main", 'c_interop', defFileName).toString()
+    def hostOs = System.getProperty('os.name')
+    def preset = null
+
+    if (hostOs == 'Mac OS X') {
+        preset = subproject.kotlin.presets.macosX64
+    } else if (hostOs == 'Linux') {
+        preset = subproject.kotlin.presets.linuxX64
+    } else if (hostOs.startsWith('Windows')) {
+        preset = subproject.kotlin.presets.mingwX64
+    }
+
+    if (preset != null && !whitelist.contains(preset)) {
+        preset = null
+    }
+
+    if (preset == null) {
+        throw new Exception("Host OS '$hostOs' is not supported in Kotlin/Native ${subproject.displayName}.")
+    }
+
+    subproject.ext.hostPreset = preset
+
+    return preset
 }
 
 // A short-cut to add a Kotlin/Native run task.

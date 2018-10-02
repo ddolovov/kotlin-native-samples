@@ -3,24 +3,12 @@ plugins {
 }
 
 kotlin {
-    sourceSets {
-        workers
-
-        macosMain { dependsOn workers }
-        linuxMain { dependsOn workers }
-        mingwMain { dependsOn workers }
-    }
-
     targets {
-        fromPreset(presets.macosX64, 'macos')
-        fromPreset(presets.linuxX64, 'linux')
-        fromPreset(presets.mingwX64, 'mingw')
-
-        configure([macos, linux, mingw]) {
+        fromPreset(defaultHostPreset(this), 'workers') {
             compilations.main.outputKinds('EXECUTABLE')
             compilations.main.entryPoint = 'sample.workers.main'
         }
-
-        createRunTask(this, 'runProgram', [macos, linux, mingw].find { it.publishable })
     }
 }
+
+createRunTask(this, 'runProgram', kotlin.targets.workers)

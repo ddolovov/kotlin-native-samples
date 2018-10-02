@@ -3,26 +3,14 @@ plugins {
 }
 
 kotlin {
-    sourceSets {
-        csvParser
-
-        macosMain { dependsOn csvParser }
-        linuxMain { dependsOn csvParser }
-        mingwMain { dependsOn csvParser }
-    }
-
     targets {
-        fromPreset(presets.macosX64, 'macos')
-        fromPreset(presets.linuxX64, 'linux')
-        fromPreset(presets.mingwX64, 'mingw')
-
-        configure([macos, linux, mingw]) {
+        fromPreset(defaultHostPreset(this), 'csvParser') {
             compilations.main.outputKinds('EXECUTABLE')
             compilations.main.entryPoint = 'sample.csvparser.main'
         }
-
-        createRunTask(this, 'runProgram', [macos, linux, mingw].find { it.publishable }) {
-            args './European_Mammals_Red_List_Nov_2009.csv', 4, 100
-        }
     }
+}
+
+createRunTask(this, 'runProgram', kotlin.targets.csvParser) {
+    args './European_Mammals_Red_List_Nov_2009.csv', 4, 100
 }

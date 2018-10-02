@@ -3,42 +3,32 @@ plugins {
 }
 
 kotlin {
-    sourceSets {
-        gitChurn
-
-        macosMain { dependsOn gitChurn }
-        linuxMain { dependsOn gitChurn }
+    presets {
+        // Determine host preset.
+        defaultHostPreset(this, [macosX64, linuxX64])
     }
 
     targets {
-        fromPreset(presets.linuxX64, 'linux') {
-            compilations.main.cinterops {
-                libgit2 {
-                    includeDirs.headerFilterOnly '/usr/include'
-                }
-            }
-        }
-
-        fromPreset(presets.macosX64, 'macos') {
-            compilations.main.cinterops {
-                libgit2 {
-                    includeDirs.headerFilterOnly '/opt/local/include', '/usr/local/include'
-                }
-            }
-        }
-
-        configure([linux, macos]) {
+        fromPreset(hostPreset, 'gitChurn') {
             compilations.main.outputKinds('EXECUTABLE')
             compilations.main.entryPoint = 'sample.gitchurn.main'
             compilations.main.cinterops {
                 libgit2 {
-                    defFile 'src/gitChurn/c_interop/libgit2.def'
+                    defFile 'src/gitChurnMain/c_interop/libgit2.def'
+                    switch (hostPreset) {
+                        case presets.macosX64:
+                            includeDirs.headerFilterOnly '/opt/local/include', '/usr/local/include'
+                            break;
+                        case presets.linuxX64:
+                            includeDirs.headerFilterOnly '/usr/include'
+                            break;
+                    }
                 }
             }
         }
-
-        createRunTask(this, 'runProgram', [linux, macos].find { it.publishable }) {
-            args this.getRootProject().getRootDir()
-        }
     }
+}
+
+createRunTask(this, 'runProgram', kotlin.targets.gitChurn) {
+    args this.getRootProject().getRootDir().toString() + '/..'
 }

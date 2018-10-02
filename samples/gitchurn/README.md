@@ -7,6 +7,6 @@ To build use `../gradlew assemble` or `./build.sh`.
 
 To run use `../gradlew runProgram` or execute the program directly:
 
-    ./build/bin/<platform>/main/release/executable/gitchurn.kexe ../../
+    ./build/bin/gitChurn/main/release/executable/gitchurn.kexe ../../
 
 It will print most frequently modified (by number of commits) files in repository.

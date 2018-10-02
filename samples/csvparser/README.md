@@ -8,7 +8,7 @@ To build use `../gradlew assemble` or `./build.sh`.
 
 To run use `../gradlew runProgram` or execute the program directly:
 
-    ./build/bin/<platform>/main/release/executable/csvparser.kexe ./European_Mammals_Red_List_Nov_2009.csv 4 100
+    ./build/bin/csvParser/main/release/executable/csvparser.kexe ./European_Mammals_Red_List_Nov_2009.csv 4 100
 
 It will print number of all unique entries in fifth column
 (Family, zero-based index) in first 100 rows of the CSV file.
