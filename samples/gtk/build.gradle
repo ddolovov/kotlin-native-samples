@@ -1,0 +1,25 @@
+plugins {
+    id 'kotlin-multiplatform'
+}
+
+def includePrefixes = [ '/opt/local/include', '/usr/include', '/usr/local/include' ]
+
+kotlin {
+    targets {
+        fromPreset(MPPTools.defaultHostPreset(this, [presets.macosX64, presets.linuxX64]), 'gtk') {
+            compilations.main.outputKinds('EXECUTABLE')
+            compilations.main.entryPoint = 'sample.gtk.main'
+            compilations.main.cinterops {
+                gtk3 {
+                    defFile 'src/gtkMain/c_interop/gtk3.def'
+                    ['/opt/local/include', '/usr/include', '/usr/local/include'].each {
+                        includeDirs "$it/atk-1.0", "$it/gdk-pixbuf-2.0", "$it/cairo", "$it/pango-1.0", "$it/gtk-3.0", "$it/glib-2.0"
+                    }
+                    includeDirs '/opt/local/lib/glib-2.0/include', '/usr/lib/x86_64-linux-gnu/glib-2.0/include', '/usr/local/lib/glib-2.0/include'
+                }
+            }
+        }
+    }
+}
+
+MPPTools.createRunTask(this, 'runProgram', kotlin.targets.gtk)
