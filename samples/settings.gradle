@@ -18,6 +18,7 @@ pluginManagement {
 enableFeaturePreview('GRADLE_METADATA')
 
 include ':csvparser'
+include ':globalState'
 include ':workers'
 
 if (MPPTools.isMacos() || MPPTools.isLinux()) {
