@@ -25,7 +25,11 @@ allprojects {
 // A short-cut for evaluation of the default host Kotlin/Native preset.
 def defaultHostPreset(
         def subproject,
-        Object whitelist = [subproject.kotlin.presets.macosX64, subproject.kotlin.presets.linuxX64, subproject.kotlin.presets.mingwX64]) {
+        def whitelist = [subproject.kotlin.presets.macosX64, subproject.kotlin.presets.linuxX64, subproject.kotlin.presets.mingwX64]) {
+
+    if (whitelist.isEmpty()) {
+        throw new Exception("Preset whitelist must not be empty in Kotlin/Native ${subproject.displayName}.")
+    }
 
     def hostOs = System.getProperty('os.name')
     def preset = null
