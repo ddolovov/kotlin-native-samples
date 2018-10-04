@@ -4,11 +4,11 @@ plugins {
 
 kotlin {
     targets {
-        fromPreset(defaultHostPreset(this), 'workers') {
+        fromPreset(MPPTools.defaultHostPreset(this), 'workers') {
             compilations.main.outputKinds('EXECUTABLE')
             compilations.main.entryPoint = 'sample.workers.main'
         }
     }
 }
 
-createRunTask(this, 'runProgram', kotlin.targets.workers)
+MPPTools.createRunTask(this, 'runProgram', kotlin.targets.workers)
