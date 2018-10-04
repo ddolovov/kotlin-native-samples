@@ -5,7 +5,7 @@ This example shows how one could implement computation offload to other workers
 Idea of workers is to avoid most common problems with concurrent programming, related
 to simultaneous computations on the same data. Instead, each object belongs to
 one or other worker's object graph, but could be disconnected from one worker
-and connected to other worker. This relies on fact that memory management
+and connected to other worker. This relies on the fact that memory management
 engine can ensure, that one worker doesn't keep references to certain object and
 whatever it refers to, and so the object could be safely transferred to another worker.
 
