@@ -17,6 +17,14 @@ pluginManagement {
 
 enableFeaturePreview('GRADLE_METADATA')
 
+// Short-cuts for detecting the host OS.
+def isMacos() { System.getProperty('os.name') == 'Mac OS X' }
+def isLinux() { System.getProperty('os.name') == 'Linux' }
+def isWindows() { System.getProperty('os.name').startsWith('Windows') }
+
 include ':csvparser'
 include ':workers'
-include ':gitchurn'
+
+if (isMacos() || isLinux() ) {
+    include ':gitchurn'
+}

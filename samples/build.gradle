@@ -22,6 +22,11 @@ allprojects {
     }
 }
 
+// Short-cuts for detecting the host OS.
+def isMacos() { System.getProperty('os.name') == 'Mac OS X' }
+def isLinux() { System.getProperty('os.name') == 'Linux' }
+def isWindows() { System.getProperty('os.name').startsWith('Windows') }
+
 // A short-cut for evaluation of the default host Kotlin/Native preset.
 def defaultHostPreset(
         def subproject,
@@ -34,11 +39,11 @@ def defaultHostPreset(
     def hostOs = System.getProperty('os.name')
     def preset = null
 
-    if (hostOs == 'Mac OS X') {
+    if (isMacos()) {
         preset = subproject.kotlin.presets.macosX64
-    } else if (hostOs == 'Linux') {
+    } else if (isLinux()) {
         preset = subproject.kotlin.presets.linuxX64
-    } else if (hostOs.startsWith('Windows')) {
+    } else if (isWindows()) {
         preset = subproject.kotlin.presets.mingwX64
     }
 
