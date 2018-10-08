@@ -1,0 +1,16 @@
+plugins {
+    id 'kotlin-multiplatform'
+}
+
+kotlin {
+    targets {
+        fromPreset(MPPTools.defaultHostPreset(this, [presets.macosX64, presets.linuxX64]), 'nonBlockingEchoServer') {
+            compilations.main.outputKinds('EXECUTABLE')
+            compilations.main.entryPoint = 'sample.echoserver.main'
+        }
+    }
+}
+
+MPPTools.createRunTask(this, 'runProgram', kotlin.targets.nonBlockingEchoServer) {
+    args 3000
+}

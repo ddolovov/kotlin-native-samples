@@ -28,6 +28,7 @@ if (MPPTools.isMacos() || MPPTools.isLinux()) {
     include ':gitchurn'
     include ':gtk'
     include ':libcurl'
+    include ':nonBlockingEchoServer'
 }
 
 /*
