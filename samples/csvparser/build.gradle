@@ -5,8 +5,8 @@ plugins {
 kotlin {
     targets {
         fromPreset(MPPTools.defaultHostPreset(this), 'csvParser') {
-            compilations.main.outputKinds('EXECUTABLE')
-            compilations.main.entryPoint = 'sample.csvparser.main'
+            compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'sample.csvparser.main'
         }
     }
 }

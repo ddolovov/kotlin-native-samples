@@ -10,8 +10,8 @@ kotlin {
 
     targets {
         fromPreset(hostPreset, 'gtk') {
-            compilations.main.outputKinds('EXECUTABLE')
-            compilations.main.entryPoint = 'sample.gtk.main'
+            compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'sample.gtk.main'
             compilations.main.cinterops {
                 gtk3 {
                     defFile 'src/gtkMain/c_interop/gtk3.def'

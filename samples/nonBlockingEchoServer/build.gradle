@@ -10,8 +10,8 @@ kotlin {
 
     targets {
         fromPreset(hostPreset, 'nonBlockingEchoServer') {
-            compilations.main.outputKinds('EXECUTABLE')
-            compilations.main.entryPoint = 'sample.nbechoserver.main'
+            compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'sample.nbechoserver.main'
         }
     }
 }

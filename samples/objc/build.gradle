@@ -5,8 +5,8 @@ plugins {
 kotlin {
     targets {
         fromPreset(MPPTools.defaultHostPreset(this, [presets.macosX64]), 'objc') {
-            compilations.main.outputKinds('EXECUTABLE')
-            compilations.main.entryPoint = 'sample.objc.main'
+            compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'sample.objc.main'
         }
     }
 }

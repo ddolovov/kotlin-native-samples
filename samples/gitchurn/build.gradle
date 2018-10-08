@@ -10,8 +10,8 @@ kotlin {
 
     targets {
         fromPreset(hostPreset, 'gitChurn') {
-            compilations.main.outputKinds('EXECUTABLE')
-            compilations.main.entryPoint = 'sample.gitchurn.main'
+            compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'sample.gitchurn.main'
             compilations.main.cinterops {
                 libgit2 {
                     defFile 'src/gitChurnMain/c_interop/libgit2.def'

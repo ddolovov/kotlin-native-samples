@@ -5,8 +5,8 @@ plugins {
 kotlin {
     targets {
         fromPreset(MPPTools.defaultHostPreset(this), 'echoServer') {
-            compilations.main.outputKinds('EXECUTABLE')
-            compilations.main.entryPoint = 'sample.echoserver.main'
+            compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'sample.echoserver.main'
         }
     }
 }
