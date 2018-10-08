@@ -1,11 +1,40 @@
+import java.nio.file.Paths
+
 /*
  * This file includes short-cuts that may potentially be implemented in Kotlin MPP Gradle plugin in the future.
  */
 
 // Short-cuts for detecting the host OS.
 def static isMacos() { System.getProperty('os.name') == 'Mac OS X' }
-def static isLinux() { System.getProperty('os.name') == 'Linux' }
 def static isWindows() { System.getProperty('os.name').startsWith('Windows') }
+def static isLinux() { isAnyLinux() && !isPiLinux() }
+def static isRaspberrypi() { isAnyLinux() && isPiLinux() }
+
+private def static isAnyLinux() { System.getProperty('os.name') == 'Linux' }
+
+private def static isPiLinux() {
+    def file = new File('/etc/os-release')
+    if (!file.isFile()) return false
+
+    file.eachLine { line ->
+        def lowerLine = line.toLowerCase()
+        if ('raspbian' in lowerLine && 'name' in lowerLine) return true
+    }
+
+    return false
+}
+
+// Short-cuts for mostly used paths.
+def static mingwPath() {
+    System.getenv('MINGW64_DIR') ?: 'c:/msys64/mingw64'
+}
+
+def static kotlinNativeDataPath() {
+    System.getenv('KONAN_DATA_DIR') ?: Paths.get(System.getProperty('user.home'), '.konan').toString()
+}
+
+def static systemFrameworksPath() { '/Library/Frameworks' }
+def static localFrameworksPath() { Paths.get(System.getProperty('user.home'), 'Library/Frameworks').toString() }
 
 // A short-cut for evaluation of the default host Kotlin/Native preset.
 def static defaultHostPreset(
@@ -25,6 +54,8 @@ def static defaultHostPreset(
         preset = subproject.kotlin.presets.linuxX64
     } else if (isWindows()) {
         preset = subproject.kotlin.presets.mingwX64
+    } else if (isRaspberrypi()) {
+        preset = subproject.kotlin.presets.linuxArm32Hfp
     }
 
     if (preset != null && !whitelist.contains(preset)) {

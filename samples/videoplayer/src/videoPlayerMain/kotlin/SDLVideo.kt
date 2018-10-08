@@ -58,7 +58,7 @@ class SDLVideo : DisposableContainer() {
 
 class SDLRendererWindow(windowPos: Dimensions, videoSize: Dimensions) : DisposableContainer() {
     private val window = sdlDisposable("CreateWindow",
-        SDL_CreateWindow("KoPlayer", windowPos.w, windowPos.h, videoSize.w, videoSize.h, SDL_WINDOW_SHOWN),
+        SDL_CreateWindow("VideoPlayer", windowPos.w, windowPos.h, videoSize.w, videoSize.h, SDL_WINDOW_SHOWN),
         ::SDL_DestroyWindow)
     private val renderer = sdlDisposable("CreateRenderer",
         SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED or SDL_RENDERER_PRESENTVSYNC),
