@@ -5,6 +5,6 @@ import java.nio.file.Paths
  * Kotlin MPP Gradle plugin.
  */
 
-def static localTestMavenRepoUrl() {
+def static testMavenRepoUrl() {
     'file://' + Paths.get(System.getProperty('user.home'), '.m2-kotlin-native-samples')
 }

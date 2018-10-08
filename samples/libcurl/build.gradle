@@ -8,7 +8,7 @@ version '1.0'
 
 publishing {
     repositories {
-        maven { url = NativeTools.localTestMavenRepoUrl() }
+        maven { url = NativeTools.testMavenRepoUrl() }
     }
 }
 
