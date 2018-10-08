@@ -13,8 +13,13 @@ publishing {
 }
 
 kotlin {
+    presets {
+        // Determine host preset.
+        MPPTools.defaultHostPreset(this, [macosX64, linuxX64])
+    }
+
     targets {
-        fromPreset(MPPTools.defaultHostPreset(this, [presets.macosX64, presets.linuxX64]), 'libcurl') {
+        fromPreset(hostPreset, 'libcurl') {
             compilations.main.cinterops {
                 gtk3 {
                     defFile 'src/libcurlMain/c_interop/libcurl.def'
