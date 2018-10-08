@@ -31,6 +31,10 @@ if (MPPTools.isMacos() || MPPTools.isLinux()) {
     include ':nonBlockingEchoServer'
 }
 
+if (MPPTools.isMacos()) {
+    include ':opengl'
+}
+
 /*
  * The projects below are disabled by default (each for its own reason).
  * Uncomment the needed project and run './gradlew :<project>:assemble' to build it, or re-import the root project in IDEA.
