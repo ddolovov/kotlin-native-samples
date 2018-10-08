@@ -1,0 +1,28 @@
+plugins {
+    id 'kotlin-multiplatform'
+}
+
+repositories {
+    maven { url = NativeTools.localTestMavenRepoUrl() }
+}
+
+kotlin {
+    sourceSets {
+        curlMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin.sample.native:libcurl:1.0'
+            }
+        }
+    }
+
+    targets {
+        fromPreset(MPPTools.defaultHostPreset(this, [presets.macosX64, presets.linuxX64]), 'curl') {
+            compilations.main.outputKinds('EXECUTABLE')
+            compilations.main.entryPoint = 'sample.curl.main'
+        }
+    }
+}
+
+MPPTools.createRunTask(this, 'runProgram', kotlin.targets.curl) {
+    args 'https://www.jetbrains.com/'
+}

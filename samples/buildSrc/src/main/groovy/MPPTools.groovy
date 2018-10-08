@@ -1,3 +1,7 @@
+/*
+ * This file includes short-cuts that may potentially be implemented in Kotlin MPP Gradle plugin in the future.
+ */
+
 // Short-cuts for detecting the host OS.
 def static isMacos() { System.getProperty('os.name') == 'Mac OS X' }
 def static isLinux() { System.getProperty('os.name') == 'Linux' }

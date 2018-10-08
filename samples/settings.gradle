@@ -19,10 +19,24 @@ enableFeaturePreview('GRADLE_METADATA')
 
 include ':csvparser'
 include ':globalState'
-include ':libcurl'
 include ':workers'
 
+/*
+ * The following projects are only available for certain platforms:
+ */
 if (MPPTools.isMacos() || MPPTools.isLinux()) {
     include ':gitchurn'
     include ':gtk'
+    include ':libcurl'
+}
+
+/*
+ * The projects below are disabled by default (each for its own reason).
+ * Uncomment the needed project and run './gradlew :<project>:assemble' to build it, or re-import the root project in IDEA.
+ */
+
+if (MPPTools.isMacos() || MPPTools.isLinux()) {
+
+    // :curl depends on "libcurl" KLIB that should be first published to local Maven repo: `./gradlew :libcurl:publish`
+    //include ':curl'
 }
