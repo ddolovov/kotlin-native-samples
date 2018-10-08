@@ -21,7 +21,7 @@ kotlin {
     targets {
         fromPreset(hostPreset, 'libcurl') {
             compilations.main.cinterops {
-                gtk3 {
+                libcurl {
                     defFile 'src/libcurlMain/c_interop/libcurl.def'
                     switch (hostPreset) {
                         case presets.macosX64:
@@ -30,6 +30,16 @@ kotlin {
                         case presets.linuxX64:
                             includeDirs.headerFilterOnly '/usr/include'
                             break
+                    }
+                }
+            }
+
+            mavenPublication {
+                pom {
+                    withXml {
+                        def root = asNode()
+                        root.appendNode('name', 'libcurl interop library')
+                        root.appendNode('description', 'A library providing interoperability with host libcurl')
                     }
                 }
             }
