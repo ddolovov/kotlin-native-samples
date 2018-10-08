@@ -2,8 +2,6 @@ plugins {
     id 'kotlin-multiplatform'
 }
 
-def includePrefixes = [ '/opt/local/include', '/usr/include', '/usr/local/include' ]
-
 kotlin {
     targets {
         fromPreset(MPPTools.defaultHostPreset(this, [presets.macosX64, presets.linuxX64]), 'gtk') {

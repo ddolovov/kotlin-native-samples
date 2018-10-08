@@ -37,6 +37,10 @@ if (MPPTools.isMacos()) {
     include ':objc'
 }
 
+if (MPPTools.isWindows()) {
+    include ':win32'
+}
+
 /*
  * The projects below are disabled by default (each for its own reason).
  * Uncomment the needed project and run './gradlew :<project>:assemble' to build it, or re-import the root project in IDEA.

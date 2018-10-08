@@ -1,0 +1,15 @@
+plugins {
+    id 'kotlin-multiplatform'
+}
+
+kotlin {
+    targets {
+        fromPreset(MPPTools.defaultHostPreset(this, [presets.mingwX64]), 'win32') {
+            compilations.main.outputKinds('EXECUTABLE')
+            compilations.main.linkerOpts '-Wl,--subsystem,windows'
+            compilations.main.entryPoint = 'sample.win32.main'
+        }
+    }
+}
+
+MPPTools.createRunTask(this, 'runProgram', kotlin.targets.win32)
