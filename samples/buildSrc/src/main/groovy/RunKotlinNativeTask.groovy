@@ -11,7 +11,7 @@ class RunKotlinNativeTask extends DefaultTask {
     private List<String> myArgs = []
 
     void args(Object... args) {
-        this.myArgs = args.each { it.toString() }
+        this.myArgs = args.collect { it.toString() }
     }
 
     @Inject
@@ -22,12 +22,12 @@ class RunKotlinNativeTask extends DefaultTask {
 
     Task configure(Closure configureClosure) {
         super.configure(configureClosure)
-        this.dependsOn("link${buildType.capitalize()}Executable${myTarget.targetName.capitalize()}")
+        this.dependsOn myTarget.compilations.main.linkTaskName('executable', buildType)
     }
 
     @TaskAction
     void run() {
-        def programFile = myTarget.compilations.main.getBinary('EXECUTABLE', buildType)
+        def programFile = myTarget.compilations.main.getBinary('executable', buildType)
         def arguments = myArgs
         myProject.exec {
             executable programFile
