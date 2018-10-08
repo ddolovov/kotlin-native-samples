@@ -20,6 +20,7 @@ enableFeaturePreview('GRADLE_METADATA')
 include ':csvparser'
 include ':globalState'
 include ':echoServer'
+include ':videoplayer'
 include ':workers'
 
 /*
