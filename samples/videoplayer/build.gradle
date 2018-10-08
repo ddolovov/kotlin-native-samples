@@ -39,7 +39,7 @@ kotlin {
                             includeDirs.headerFilterOnly '/usr/include', '/usr/include/x86_64-linux-gnu', '/usr/include/ffmpeg'
                             break
                         case presets.mingwX64:
-                            includeDirs 'C:/msys64/mingw64/include'
+                            includeDirs "${MPPTools.mingwPath()}/include"
                             break
                     }
                 }
