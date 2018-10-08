@@ -1,4 +1,4 @@
-package sample.echoserver
+package sample.nbechoserver
 
 import kotlinx.cinterop.*
 import platform.posix.*
