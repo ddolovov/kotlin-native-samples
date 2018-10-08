@@ -7,14 +7,6 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        curlMain {
-            dependencies {
-                implementation 'org.jetbrains.kotlin.sample.native:libcurl:1.0'
-            }
-        }
-    }
-
     presets {
         // Determine host preset.
         MPPTools.defaultHostPreset(this, [macosX64, linuxX64])
@@ -24,6 +16,14 @@ kotlin {
         fromPreset(hostPreset, 'curl') {
             compilations.main.outputKinds('EXECUTABLE')
             compilations.main.entryPoint = 'sample.curl.main'
+        }
+    }
+
+    sourceSets {
+        curlMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin.sample.native:libcurl:1.0'
+            }
         }
     }
 }
