@@ -17,16 +17,21 @@ pluginManagement {
 
 enableFeaturePreview('GRADLE_METADATA')
 
-include ':csvparser'
-include ':globalState'
-include ':echoServer'
-include ':tetris'
-include ':videoplayer'
-include ':workers'
-
 /*
  * The following projects are only available for certain platforms:
  */
+if (MPPTools.isMacos() || MPPTools.isLinux() || MPPTools.isWindows() || MPPTools.isRaspberryPi()) {
+    include ':tetris'
+}
+
+if (MPPTools.isMacos() || MPPTools.isLinux() || MPPTools.isWindows()) {
+    include ':csvparser'
+    include ':globalState'
+    include ':echoServer'
+    include ':videoplayer'
+    include ':workers'
+}
+
 if (MPPTools.isMacos() || MPPTools.isLinux()) {
     include ':gitchurn'
     include ':gtk'
