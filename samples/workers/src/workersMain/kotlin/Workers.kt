@@ -7,18 +7,20 @@ data class WorkerResult(val intResult: Int, val stringResult: String)
 
 fun main(args: Array<String>) {
     val COUNT = 5
-    val workers = Array(COUNT, { _ -> Worker.start()})
+    val workers = Array(COUNT, { _ -> Worker.start() })
 
-    for (attempt in 1 .. 3) {
-        val futures = Array(workers.size, { workerIndex -> workers[workerIndex].execute(TransferMode.SAFE, {
-            WorkerArgument(workerIndex, "attempt $attempt") }) { input ->
+    for (attempt in 1..3) {
+        val futures = Array(workers.size) { workerIndex ->
+            workers[workerIndex].execute(TransferMode.SAFE, {
+                WorkerArgument(workerIndex, "attempt $attempt")
+            }) { input ->
                 var sum = 0
                 for (i in 0..input.intParam * 1000) {
                     sum += i
                 }
                 WorkerResult(sum, input.stringParam + " result")
             }
-        })
+        }
         val futureSet = futures.toSet()
         var consumed = 0
         while (consumed < futureSet.size) {
