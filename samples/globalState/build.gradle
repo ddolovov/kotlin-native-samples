@@ -8,9 +8,7 @@ kotlin {
             compilations.main.outputKinds 'executable'
             compilations.main.entryPoint 'sample.globalstate.main'
             compilations.main.cinterops {
-                global {
-                    defFile 'src/globalStateMain/c_interop/global.def'
-                }
+                global
             }
         }
     }

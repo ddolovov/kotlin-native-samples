@@ -22,7 +22,6 @@ kotlin {
         fromPreset(hostPreset, 'libcurl') {
             compilations.main.cinterops {
                 libcurl {
-                    defFile 'src/libcurlMain/c_interop/libcurl.def'
                     switch (hostPreset) {
                         case presets.macosX64:
                             includeDirs.headerFilterOnly '/opt/local/include', '/usr/local/include'

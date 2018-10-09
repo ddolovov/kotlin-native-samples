@@ -14,7 +14,6 @@ kotlin {
             compilations.main.entryPoint 'sample.gtk.main'
             compilations.main.cinterops {
                 gtk3 {
-                    defFile 'src/gtkMain/c_interop/gtk3.def'
                     ['/opt/local/include', '/usr/include', '/usr/local/include'].each {
                         includeDirs "$it/atk-1.0", "$it/gdk-pixbuf-2.0", "$it/cairo", "$it/pango-1.0", "$it/gtk-3.0", "$it/glib-2.0"
                     }

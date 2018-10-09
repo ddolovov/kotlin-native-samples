@@ -30,7 +30,6 @@ kotlin {
 
             compilations.main.cinterops {
                 ffmpeg {
-                    defFile 'src/videoPlayerMain/c_interop/ffmpeg.def'
                     switch (hostPreset) {
                         case presets.macosX64: 
                             includeDirs.headerFilterOnly '/opt/local/include', '/usr/local/include'
@@ -44,7 +43,6 @@ kotlin {
                     }
                 }
                 sdl {
-                    defFile 'src/videoPlayerMain/c_interop/sdl.def'
                     switch (hostPreset) {
                         case presets.macosX64:
                             includeDirs "${MPPTools.localFrameworksPath()}/SDL2.framework/Headers",

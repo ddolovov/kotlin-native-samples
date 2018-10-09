@@ -47,7 +47,6 @@ kotlin {
 
             compilations.main.cinterops {
                 sdl {
-                    defFile 'src/tetrisMain/c_interop/sdl.def'
                     switch (hostPreset) {
                         case presets.macosX64:
                             includeDirs "${MPPTools.localFrameworksPath()}/SDL2.framework/Headers",
