@@ -1,22 +1,21 @@
 package sample.libcurl
 
 import kotlinx.cinterop.*
-import platform.posix.*
 import platform.posix.size_t
 import libcurl.*
 
-class CUrl(val url: String)  {
-    val stableRef = StableRef.create(this)
+class CUrl(url: String)  {
+    private val stableRef = StableRef.create(this)
 
-    val curl = curl_easy_init();
+    private val curl = curl_easy_init()
 
     init {
         curl_easy_setopt(curl, CURLOPT_URL, url)
         val header = staticCFunction(::header_callback)
         curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header)
         curl_easy_setopt(curl, CURLOPT_HEADERDATA, stableRef.asCPointer())
-        val write_data = staticCFunction(::write_callback)
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data)
+        val writeData = staticCFunction(::write_callback)
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeData)
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, stableRef.asCPointer())
     }
 
