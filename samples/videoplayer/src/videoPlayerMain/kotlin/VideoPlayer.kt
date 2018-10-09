@@ -152,7 +152,7 @@ class VideoPlayer(val requestedSize: Dimensions?) : DisposableContainer() {
 
 fun main(args: Array<String>) {
     if (args.isEmpty()) {
-        println("usage: videoplayer file.ext [<width> <height> | 'video' | 'audio' | 'both']")
+        println("Usage: videoplayer.kexe <file.ext> [<width> <height> | 'video' | 'audio' | 'both']")
         exitProcess(1)
     }
     av_register_all()

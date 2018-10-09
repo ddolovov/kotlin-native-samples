@@ -4,8 +4,8 @@ import kotlinx.cinterop.*
 import platform.posix.*
 
 fun main(args: Array<String>) {
-    if (args.size < 1) {
-        println("Usage: ./echo_server <port>")
+    if (args.isEmpty()) {
+        println("Usage: echoserver.kexe <port>")
         return
     }
 

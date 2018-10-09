@@ -6,8 +6,8 @@ import kotlin.coroutines.*
 import kotlin.coroutines.intrinsics.*
 
 fun main(args: Array<String>) {
-    if (args.size < 1) {
-        println("Usage: ./echo_server <port>")
+    if (args.isEmpty()) {
+        println("Usage: nonBlockingEchoServer.kexe <port>")
         return
     }
 

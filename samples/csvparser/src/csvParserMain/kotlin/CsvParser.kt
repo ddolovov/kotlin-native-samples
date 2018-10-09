@@ -26,7 +26,7 @@ fun parseLine(line: String, separator: Char) : List<String> {
 
 fun main(args: Array<String>) {
     if (args.size != 3) {
-        println("usage: csvparser.kexe file.csv column count")
+        println("Usage: csvparser.kexe <file.csv> <column> <count>")
         return
     }
     val fileName = args[0]

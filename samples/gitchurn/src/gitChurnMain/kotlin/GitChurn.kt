@@ -5,7 +5,7 @@ import platform.posix.*
 import libgit2.*
 
 fun main(args: Array<String>) {
-    if (args.size == 0)
+    if (args.isEmpty())
         return help()
 
     val workDir = args[0]
