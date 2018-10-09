@@ -19,7 +19,7 @@ data class SharedData(val string: String, val int: Int, val member: SharedDataMe
 val globalObject: SharedData?
     get() = sharedData.frozenKotlinObject?.asStableRef<SharedData>()?.get()
 
-fun dumpShared(prefix: String): Unit {
+fun dumpShared(prefix: String) {
     println("""
             $prefix: ${pthread_self()} x=${sharedData.x} f=${sharedData.f} s=${sharedData.string!!.toKString()}
             """.trimIndent())
