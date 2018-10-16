@@ -5,7 +5,7 @@ plugins {
 kotlin {
     targets {
         fromPreset(MPPTools.defaultHostPreset(project, [presets.macosX64]), 'opengl') {
-            compilations.main.outputKinds 'executable'
+            compilations.main.outputKinds 'EXECUTABLE'
             compilations.main.entryPoint 'sample.opengl.main'
         }
     }

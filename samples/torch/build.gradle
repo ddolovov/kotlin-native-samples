@@ -7,7 +7,7 @@ def torchHome = "${MPPTools.kotlinNativeDataPath()}/third-party/torch"
 kotlin {
     targets {
         fromPreset(MPPTools.defaultHostPreset(project, [presets.macosX64, presets.linuxX64]), 'torch') {
-            compilations.main.outputKinds 'executable'
+            compilations.main.outputKinds 'EXECUTABLE'
             compilations.main.entryPoint 'sample.torch.main'
             compilations.main.linkerOpts "-L$torchHome/lib", '-lATen'
             compilations.main.cinterops {

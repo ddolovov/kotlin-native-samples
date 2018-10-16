@@ -5,7 +5,7 @@ plugins {
 kotlin {
     targets {
         fromPreset(MPPTools.defaultHostPreset(project), 'globalState') {
-            compilations.main.outputKinds 'executable'
+            compilations.main.outputKinds 'EXECUTABLE'
             compilations.main.entryPoint 'sample.globalstate.main'
             compilations.main.cinterops {
                 global

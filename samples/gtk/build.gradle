@@ -10,7 +10,7 @@ kotlin {
 
     targets {
         fromPreset(hostPreset, 'gtk') {
-            compilations.main.outputKinds 'executable'
+            compilations.main.outputKinds 'EXECUTABLE'
             compilations.main.entryPoint 'sample.gtk.main'
             compilations.main.cinterops {
                 gtk3 {

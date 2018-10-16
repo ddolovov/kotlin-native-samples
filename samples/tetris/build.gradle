@@ -12,7 +12,7 @@ kotlin {
 
     targets {
         fromPreset(hostPreset, 'tetris') {
-            compilations.main.outputKinds 'executable'
+            compilations.main.outputKinds 'EXECUTABLE'
             compilations.main.entryPoint 'sample.tetris.main'
 
             switch (hostPreset) {
@@ -88,8 +88,8 @@ MPPTools.createRunTask(project, 'runProgram', kotlin.targets.tetris)
 
 afterEvaluate {
     kotlin.targets.tetris.compilations.main { mainCompilation ->
-        def linkTasks = ['release', 'debug']
-                .collect { mainCompilation.findLinkTask('executable', it) }
+        def linkTasks = ['RELEASE', 'DEBUG']
+                .collect { mainCompilation.findLinkTask('EXECUTABLE', it) }
                 .findAll { it != null }
 
         def compileWindowsResourcesTask = tasks.findByName('compileWindowsResources')

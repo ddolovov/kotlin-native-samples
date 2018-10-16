@@ -14,7 +14,7 @@ kotlin {
 
     targets {
         fromPreset(hostPreset, 'curl') {
-            compilations.main.outputKinds 'executable'
+            compilations.main.outputKinds 'EXECUTABLE'
             compilations.main.entryPoint 'sample.curl.main'
         }
     }
