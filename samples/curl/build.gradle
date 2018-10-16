@@ -9,7 +9,7 @@ repositories {
 kotlin {
     presets {
         // Determine host preset.
-        MPPTools.defaultHostPreset(this, [macosX64, linuxX64])
+        MPPTools.defaultHostPreset(project, [macosX64, linuxX64])
     }
 
     targets {
@@ -28,6 +28,6 @@ kotlin {
     }
 }
 
-MPPTools.createRunTask(this, 'runProgram', kotlin.targets.curl) {
+MPPTools.createRunTask(project, 'runProgram', kotlin.targets.curl) {
     args 'https://www.jetbrains.com/'
 }

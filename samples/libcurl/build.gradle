@@ -15,7 +15,7 @@ publishing {
 kotlin {
     presets {
         // Determine host preset.
-        MPPTools.defaultHostPreset(this, [macosX64, linuxX64])
+        MPPTools.defaultHostPreset(project, [macosX64, linuxX64])
     }
 
     targets {

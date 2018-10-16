@@ -4,13 +4,13 @@ plugins {
 
 kotlin {
     targets {
-        fromPreset(MPPTools.defaultHostPreset(this), 'csvParser') {
+        fromPreset(MPPTools.defaultHostPreset(project), 'csvParser') {
             compilations.main.outputKinds 'executable'
             compilations.main.entryPoint 'sample.csvparser.main'
         }
     }
 }
 
-MPPTools.createRunTask(this, 'runProgram', kotlin.targets.csvParser) {
+MPPTools.createRunTask(project, 'runProgram', kotlin.targets.csvParser) {
     args './European_Mammals_Red_List_Nov_2009.csv', 4, 100
 }

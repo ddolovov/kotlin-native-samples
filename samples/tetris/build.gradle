@@ -7,7 +7,7 @@ def winCompiledResourceFile = file("$buildDir/compiledWindowsResources/Tetris.re
 kotlin {
     presets {
         // Determine host preset.
-        MPPTools.defaultHostPreset(this, [macosX64, linuxX64, mingwX64, linuxArm32Hfp /* aka RaspberryPi */ ])
+        MPPTools.defaultHostPreset(project, [macosX64, linuxX64, mingwX64, linuxArm32Hfp /* aka RaspberryPi */ ])
     }
 
     targets {
@@ -84,7 +84,7 @@ if (hostPreset == kotlin.presets.mingwX64) {
     }
 }
 
-MPPTools.createRunTask(this, 'runProgram', kotlin.targets.tetris)
+MPPTools.createRunTask(project, 'runProgram', kotlin.targets.tetris)
 
 afterEvaluate {
     kotlin.targets.tetris.compilations.main { mainCompilation ->

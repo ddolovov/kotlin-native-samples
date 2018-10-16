@@ -4,11 +4,11 @@ plugins {
 
 kotlin {
     targets {
-        fromPreset(MPPTools.defaultHostPreset(this, [presets.macosX64]), 'objc') {
+        fromPreset(MPPTools.defaultHostPreset(project, [presets.macosX64]), 'objc') {
             compilations.main.outputKinds 'executable'
             compilations.main.entryPoint 'sample.objc.main'
         }
     }
 }
 
-MPPTools.createRunTask(this, 'runProgram', kotlin.targets.objc)
+MPPTools.createRunTask(project, 'runProgram', kotlin.targets.objc)

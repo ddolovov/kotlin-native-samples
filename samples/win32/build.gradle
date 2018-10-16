@@ -4,7 +4,7 @@ plugins {
 
 kotlin {
     targets {
-        fromPreset(MPPTools.defaultHostPreset(this, [presets.mingwX64]), 'win32') {
+        fromPreset(MPPTools.defaultHostPreset(project, [presets.mingwX64]), 'win32') {
             compilations.main.outputKinds 'executable'
             compilations.main.entryPoint 'sample.win32.main'
             compilations.main.linkerOpts '-Wl,--subsystem,windows'
@@ -12,4 +12,4 @@ kotlin {
     }
 }
 
-MPPTools.createRunTask(this, 'runProgram', kotlin.targets.win32)
+MPPTools.createRunTask(project, 'runProgram', kotlin.targets.win32)

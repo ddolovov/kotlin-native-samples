@@ -4,13 +4,13 @@ plugins {
 
 kotlin {
     targets {
-        fromPreset(MPPTools.defaultHostPreset(this), 'echoServer') {
+        fromPreset(MPPTools.defaultHostPreset(project), 'echoServer') {
             compilations.main.outputKinds 'executable'
             compilations.main.entryPoint 'sample.echoserver.main'
         }
     }
 }
 
-MPPTools.createRunTask(this, 'runProgram', kotlin.targets.echoServer) {
+MPPTools.createRunTask(project, 'runProgram', kotlin.targets.echoServer) {
     args 3000
 }
