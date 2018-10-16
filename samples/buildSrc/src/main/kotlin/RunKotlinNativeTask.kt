@@ -13,22 +13,28 @@ open class RunKotlinNativeTask @Inject constructor(
 
     var buildType = "release"
     private var myArgs: List<String> = emptyList()
+    private val myEnvironment: MutableMap<String, Any> = mutableMapOf()
 
     fun args(vararg args: Any) {
-        this.myArgs = args.map { it.toString() }
+        myArgs = args.map { it.toString() }
+    }
+
+    fun environment(map: Map<String, Any>) {
+        myEnvironment += map
     }
 
     override fun configure(configureClosure: Closure<Any>): Task {
         val task = super.configure(configureClosure)
-        this.dependsOn += myTarget.compilations.main.linkTaskName("executable", buildType)
+        this.dependsOn += myTarget.compilations.main.linkTaskName("EXECUTABLE", buildType)
         return task
     }
 
     @TaskAction
     fun run() {
         myProject.exec {
-            it.executable = myTarget.compilations.main.getBinary("executable", buildType).toString()
+            it.executable = myTarget.compilations.main.getBinary("EXECUTABLE", buildType).toString()
             it.args = myArgs
+            it.environment = myEnvironment
         }
     }
 

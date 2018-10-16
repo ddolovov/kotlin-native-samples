@@ -1,0 +1,37 @@
+plugins {
+    id 'kotlin-multiplatform'
+}
+
+def torchHome = "${MPPTools.kotlinNativeDataPath()}/third-party/torch"
+
+kotlin {
+    targets {
+        fromPreset(MPPTools.defaultHostPreset(project, [presets.macosX64, presets.linuxX64]), 'torch') {
+            compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'sample.torch.main'
+            compilations.main.linkerOpts "-L$torchHome/lib", '-lATen'
+            compilations.main.cinterops {
+                torch {
+                    includeDirs "$torchHome/include", "$torchHome/include/TH"
+                }
+            }
+        }
+    }
+}
+
+task downloadTorch(type: Exec) {
+    workingDir projectDir
+    commandLine './downloadTorch.sh'
+}
+tasks[kotlin.targets.torch.compilations.main.cinterops.torch.interopProcessingTaskName].dependsOn downloadTorch
+
+task downloadMNIST(type: Exec) {
+    workingDir projectDir
+    commandLine './downloadMNIST.sh'
+}
+
+MPPTools.createRunTask(project, 'runProgram', kotlin.targets.torch) {
+    dependsOn downloadMNIST
+    environment 'LD_LIBRARY_PATH': "$torchHome/lib"
+    environment 'DYLD_LIBRARY_PATH': "$torchHome/lib"
+}

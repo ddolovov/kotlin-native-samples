@@ -37,6 +37,7 @@ if (MPPTools.isMacos() || MPPTools.isLinux()) {
     include ':gtk'
     include ':libcurl'
     include ':nonBlockingEchoServer'
+    include ':torch'
 }
 
 if (MPPTools.isMacos()) {
