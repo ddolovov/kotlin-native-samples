@@ -5,6 +5,7 @@ TH_TARGET_DIRECTORY="$KONAN_USER_DIR/third-party/torch"
 NO_CUDA=true # set to false for GPU support
 
 if [ ! -d $TH_TARGET_DIRECTORY/include/THNN ]; then
+    echo "Installing Torch into $TH_TARGET_DIRECTORY ..."
 
     mkdir -p build/3rd-party
     cd build/3rd-party
