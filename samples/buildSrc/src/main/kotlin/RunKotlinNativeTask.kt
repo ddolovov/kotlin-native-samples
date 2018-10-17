@@ -11,7 +11,7 @@ open class RunKotlinNativeTask @Inject constructor(
         private val myTarget: KotlinTarget
 ): DefaultTask() {
 
-    var buildType = "release"
+    var buildType = "RELEASE"
     private var myArgs: List<String> = emptyList()
     private val myEnvironment: MutableMap<String, Any> = mutableMapOf()
 
