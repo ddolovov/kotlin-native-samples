@@ -26,7 +26,7 @@ Now
 will install it into `$HOME/.konan/third-party/torch` (if not yet done). One may override the location of
 `third-party/torch` by setting the `KONAN_DATA_DIR` environment variable.
 
-To build use `../gradlew build`.
+To build use `../gradlew assemble`.
 
     ./downloadMNIST.sh
 
