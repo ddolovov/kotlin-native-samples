@@ -38,6 +38,7 @@ if (MPPTools.isMacos() || MPPTools.isLinux()) {
     include ':curl'
     include ':libcurl'
     include ':nonBlockingEchoServer'
+    include ':tensorflow'
     include ':torch'
 }
 
