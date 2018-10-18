@@ -10,7 +10,8 @@ import java.nio.file.Paths
  */
 
 // Needed purely for test purposes:
-fun testMavenRepoUrl() = "file://" + Paths.get(userHome, ".m2-kotlin-native-samples")
+@get:JvmName("testMavenRepoUrl")
+val testMavenRepoUrl by lazy { "file://" + Paths.get(userHome, ".m2-kotlin-native-samples") }
 
 // This will be dropped after full support of JS-interop.
 // Warning: May throw exception if no property was found!

@@ -13,30 +13,37 @@ import java.nio.file.Paths
  */
 
 // Short-cuts for detecting the host OS.
-fun isMacos() = hostOs == "Mac OS X"
-fun isWindows() = hostOs.startsWith("Windows")
-fun isLinux() = isAnyLinux() && !isPiLinux()
-fun isRaspberrypi() = isAnyLinux() && isPiLinux()
+@get:JvmName("isMacos") val isMacos by lazy { hostOs == "Mac OS X" }
+@get:JvmName("isWindows") val isWindows by lazy { hostOs.startsWith("Windows") }
+@get:JvmName("isLinux") val isLinux by lazy { isAnyLinux && !isPiLinux }
+@get:JvmName("isRaspberrypi") val isRaspberrypi by lazy { isAnyLinux && isPiLinux }
 
-private fun isAnyLinux() = hostOs == "Linux"
+private val isAnyLinux by lazy { hostOs == "Linux" }
 
-private fun isPiLinux(): Boolean {
+private val isPiLinux by lazy {
     val file = File("/etc/os-release")
-    if (!file.isFile) return false
-
-    return file.useLines { lines ->
-        lines.map { it.toLowerCase() }.any { "raspbian" in it && "name" in it }
-    }
+    if (!file.isFile)
+        false
+    else
+        file.useLines { lines ->
+            lines.map { it.toLowerCase() }.any { "raspbian" in it && "name" in it }
+        }
 }
 
 // Short-cuts for mostly used paths.
-fun mingwPath() = System.getenv("MINGW64_DIR") ?: "c:/msys64/mingw64"
+@get:JvmName("mingwPath")
+val mingwPath by lazy { System.getenv("MINGW64_DIR") ?: "c:/msys64/mingw64" }
 
-fun kotlinNativeDataPath() =
+@get:JvmName("kotlinNativeDataPath")
+val kotlinNativeDataPath by lazy {
     System.getenv("KONAN_DATA_DIR") ?: Paths.get(userHome, ".konan").toString()
+}
 
-fun systemFrameworksPath() = "/Library/Frameworks"
-fun localFrameworksPath() = Paths.get(userHome, "Library/Frameworks").toString()
+@get:JvmName("systemFrameworksPath")
+val systemFrameworksPath = "/Library/Frameworks"
+
+@get:JvmName("localFrameworksPath")
+val localFrameworksPath by lazy { Paths.get(userHome, "Library/Frameworks").toString() }
 
 // A short-cut for evaluation of the default host Kotlin/Native preset.
 @JvmOverloads
@@ -49,10 +56,10 @@ fun defaultHostPreset(
         throw Exception("Preset whitelist must not be empty in Kotlin/Native ${subproject.displayName}.")
 
     val presetCandidate = when {
-        isMacos() -> subproject.kotlin.presets.macosX64
-        isLinux() -> subproject.kotlin.presets.linuxX64
-        isWindows() -> subproject.kotlin.presets.mingwX64
-        isRaspberrypi() -> subproject.kotlin.presets.linuxArm32Hfp
+        isMacos -> subproject.kotlin.presets.macosX64
+        isLinux -> subproject.kotlin.presets.linuxX64
+        isWindows -> subproject.kotlin.presets.mingwX64
+        isRaspberrypi -> subproject.kotlin.presets.linuxArm32Hfp
         else -> null
     }
 
