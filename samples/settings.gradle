@@ -27,6 +27,7 @@ if (MPPTools.isMacos() || MPPTools.isLinux() || MPPTools.isWindows() || MPPTools
 if (MPPTools.isMacos() || MPPTools.isLinux() || MPPTools.isWindows()) {
     include ':csvparser'
     include ':globalState'
+    include ':html5Canvas'
     include ':echoServer'
     include ':videoplayer'
     include ':workers'
