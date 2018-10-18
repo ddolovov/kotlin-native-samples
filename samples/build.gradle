@@ -17,3 +17,21 @@ allprojects {
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
 }
+
+task buildSh(type: Exec) {
+    errorOutput = System.out
+    standardInput = System.in
+    workingDir projectDir
+    if (MPPTools.isWindows()) {
+        commandLine "$projectDir\build.bat"
+    } else {
+        commandLine "$projectDir/build.sh"
+    }
+}
+
+task buildAllSamples() {
+    dependsOn buildSh
+    subprojects.each {
+        dependsOn("${it.path}:assemble")
+    }
+}

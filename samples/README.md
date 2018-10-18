@@ -11,4 +11,4 @@ the sources is used. So one must build the compiler and the necessary platform l
 
 One may also build all the samples with one command. To build them using Gradle run:
 
-    ./gradlew build
+    ./gradlew buildAllSamples
