@@ -46,6 +46,7 @@ if (MPPTools.isMacos() || MPPTools.isLinux()) {
 if (MPPTools.isMacos()) {
     include ':opengl'
     include ':objc'
+    include ':uikit'
 }
 
 if (MPPTools.isWindows()) {
