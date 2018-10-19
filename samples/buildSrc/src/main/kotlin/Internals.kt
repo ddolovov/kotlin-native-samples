@@ -29,8 +29,5 @@ internal val NamedDomainObjectCollection<KotlinTargetPreset<*>>.linuxX64: Kotlin
 internal val NamedDomainObjectCollection<KotlinTargetPreset<*>>.mingwX64: KotlinTargetPreset<*>
     get() = getByName(::mingwX64.name) as KotlinTargetPreset<*>
 
-internal val NamedDomainObjectCollection<KotlinTargetPreset<*>>.linuxArm32Hfp: KotlinTargetPreset<*>
-    get() = getByName(::linuxArm32Hfp.name) as KotlinTargetPreset<*>
-
 internal val NamedDomainObjectContainer<out KotlinCompilation>.main: KotlinNativeCompilation
     get() = getByName(::main.name) as KotlinNativeCompilation

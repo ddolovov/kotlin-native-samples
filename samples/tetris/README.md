@@ -4,16 +4,13 @@ This example shows implementation of simple Tetris game using SDL
 (Simple DirectMedia Layer) library for rendering. SDL allows easy development
 of cross-platform game and multimedia applications.
 
-Start with building compiler by using `dist` and `cross_dist` for cross-targets (unless
-using binary distribution).
-
 Install SDL2 development files (see https://www.libsdl.org/download-2.0.php). For Mac -
 copy `SDL2.framework` to `$HOME/Library/Frameworks`. For Debian-like Linux -
 use `apt-get install libsdl2-dev`.
 For Windows - `pacman -S mingw-w64-x86_64-SDL2` in MinGW64 console, if you do
 not have MSYS2-MinGW64 installed - install it first as described in http://www.msys2.org
 
-To build Tetris application for your host platform (Mac or Linux) use `../gradlew assemble`.
+To build Tetris application for your host platform use `../gradlew assemble`.
 
 Note that SDL2 must be installed on the host.
 

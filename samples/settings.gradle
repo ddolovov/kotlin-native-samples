@@ -20,23 +20,20 @@ enableFeaturePreview('GRADLE_METADATA')
 /*
  * The following projects are only available for certain platforms:
  */
-if (MPPTools.isMacos() || MPPTools.isLinux() || MPPTools.isWindows() || MPPTools.isRaspberryPi()) {
-    include ':tetris'
-}
-
 if (MPPTools.isMacos() || MPPTools.isLinux() || MPPTools.isWindows()) {
     include ':csvparser'
+    include ':echoServer'
     include ':globalState'
     include ':html5Canvas'
-    include ':echoServer'
+    include ':tetris'
     include ':videoplayer'
     include ':workers'
 }
 
 if (MPPTools.isMacos() || MPPTools.isLinux()) {
+    include ':curl'
     include ':gitchurn'
     include ':gtk'
-    include ':curl'
     include ':libcurl'
     include ':nonBlockingEchoServer'
     include ':tensorflow'
@@ -44,8 +41,8 @@ if (MPPTools.isMacos() || MPPTools.isLinux()) {
 }
 
 if (MPPTools.isMacos()) {
-    include ':opengl'
     include ':objc'
+    include ':opengl'
     include ':uikit'
 }
 

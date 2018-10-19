@@ -5,7 +5,6 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinTargetPreset
-import java.io.File
 import java.nio.file.Paths
 
 /*
@@ -13,22 +12,14 @@ import java.nio.file.Paths
  */
 
 // Short-cuts for detecting the host OS.
-@get:JvmName("isMacos") val isMacos by lazy { hostOs == "Mac OS X" }
-@get:JvmName("isWindows") val isWindows by lazy { hostOs.startsWith("Windows") }
-@get:JvmName("isLinux") val isLinux by lazy { isAnyLinux && !isPiLinux }
-@get:JvmName("isRaspberrypi") val isRaspberrypi by lazy { isAnyLinux && isPiLinux }
+@get:JvmName("isMacos")
+val isMacos by lazy { hostOs == "Mac OS X" }
 
-private val isAnyLinux by lazy { hostOs == "Linux" }
+@get:JvmName("isWindows")
+val isWindows by lazy { hostOs.startsWith("Windows") }
 
-private val isPiLinux by lazy {
-    val file = File("/etc/os-release")
-    if (!file.isFile)
-        false
-    else
-        file.useLines { lines ->
-            lines.map { it.toLowerCase() }.any { "raspbian" in it && "name" in it }
-        }
-}
+@get:JvmName("isLinux")
+val isLinux by lazy { hostOs == "Linux" }
 
 // Short-cuts for mostly used paths.
 @get:JvmName("mingwPath")
@@ -59,7 +50,6 @@ fun defaultHostPreset(
         isMacos -> subproject.kotlin.presets.macosX64
         isLinux -> subproject.kotlin.presets.linuxX64
         isWindows -> subproject.kotlin.presets.mingwX64
-        isRaspberrypi -> subproject.kotlin.presets.linuxArm32Hfp
         else -> null
     }
 

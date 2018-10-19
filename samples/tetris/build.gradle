@@ -2,14 +2,10 @@ plugins {
     id 'kotlin-multiplatform'
 }
 
-def winCompiledResourceFile = file("$buildDir/compiledWindowsResources/Tetris.res")
+File winCompiledResourceFile = file("$buildDir/compiledWindowsResources/Tetris.res")
+project.ext.hostPreset = determinePreset()
 
 kotlin {
-    presets {
-        // Determine host preset.
-        MPPTools.defaultHostPreset(project, [macosX64, linuxX64, mingwX64, linuxArm32Hfp /* aka RaspberryPi */ ])
-    }
-
     targets {
         fromPreset(hostPreset, 'tetris') {
             compilations.main.outputKinds 'EXECUTABLE'
@@ -107,4 +103,15 @@ afterEvaluate {
             }
         }
     }
+}
+
+private Object determinePreset() {
+    Object preset = isRaspberryPiBuild() ? kotlin.presets.linuxArm32Hfp /* aka RaspberryPi */ : MPPTools.defaultHostPreset(project)
+    println("$project has been configured for ${preset.name} platform.")
+    preset
+}
+
+// If host platform is Linux and RaspberryPi target is activated.
+private boolean isRaspberryPiBuild() {
+    MPPTools.isLinux() && Boolean.parseBoolean(project.findProperty('tetris.raspberrypi.build') as String)
 }
