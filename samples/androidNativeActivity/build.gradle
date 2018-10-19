@@ -1,0 +1,94 @@
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:3.1.2'
+    }
+}
+
+repositories {
+    jcenter()
+    google()
+    mavenCentral()
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    maven { url 'https://plugins.gradle.org/m2/' }
+}
+
+apply plugin: 'org.jetbrains.kotlin.multiplatform'
+apply plugin: 'com.android.application'
+
+File appDir = file("$buildDir/Polyhedron")
+File libsDir = file("$appDir/libs")
+Map<String, String> libsDirMapping = [
+        'arm32' : "$libsDir/armeabi-v7a",
+        'arm64' : "$libsDir/arm64-v8a"
+]
+
+android {
+    compileSdkVersion 25
+
+    defaultConfig {
+        applicationId 'com.jetbrains.konan_activity2'
+        minSdkVersion 9
+        targetSdkVersion 25
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+    }
+
+    sourceSets {
+        main {
+            root 'src/commonMain'
+            jniLibs.srcDir libsDir
+        }
+    }
+}
+
+kotlin {
+    targets {
+        fromPreset(presets.androidNativeArm32, 'arm32')
+        fromPreset(presets.androidNativeArm64, 'arm64')
+
+        configure([arm32, arm64]) {
+            compilations.main.outputKinds 'EXECUTABLE'
+            compilations.main.entryPoint 'sample.androidnative.main'
+        }
+    }
+}
+
+// Disable generating Kotlin metadata.
+tasks.compileKotlinMetadata.enabled = false
+
+afterEvaluate {
+    kotlin.targets { targets ->
+        [arm32, arm64].collect { target ->
+            target.compilations.main { mainCompilation ->
+                String buildType = 'RELEASE' // Change to 'DEBUG' to include debug symbols.
+                Object linkTask = mainCompilation.getLinkTask('EXECUTABLE', buildType)
+
+                // Rename binary files to 'libpoly.so' and put them to the appropriate location.
+                File binaryFile = linkTask.outputFile.get()
+                linkTask.doLast {
+                    copy {
+                        from binaryFile
+                        into libsDirMapping[target.targetName]
+                        rename {
+                            'libpoly.so'
+                        }
+                    }
+                }
+
+                tasks.preBuild.dependsOn linkTask
+            }
+        }
+    }
+}
