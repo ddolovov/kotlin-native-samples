@@ -27,7 +27,7 @@ kotlin {
                             includeDirs.headerFilterOnly '/opt/local/include', '/usr/local/include'
                             break
                         case presets.linuxX64:
-                            includeDirs.headerFilterOnly '/usr/include'
+                            includeDirs.headerFilterOnly '/usr/include', '/usr/include/x86_64-linux-gnu'
                             break
                     }
                 }
