@@ -13,11 +13,7 @@ kotlin {
 
             switch (hostPreset) {
                 case presets.macosX64:
-                    compilations.main.linkerOpts "-F ${MPPTools.localFrameworksPath()}",
-                            "-F ${MPPTools.systemFrameworksPath()}",
-                            '-framework SDL2'
-                    // Use this line instead of the previous one if you've got a 'No SDL-framework' error:
-                    //compilations.main.linkerOpts '-L/opt/local/lib', '-L/usr/local/lib', '-lSDL2'
+                    compilations.main.linkerOpts '-L/opt/local/lib', '-L/usr/local/lib', '-lSDL2'
                     break
                 case presets.linuxX64:
                     compilations.main.linkerOpts '-L/usr/lib64', '-L/usr/lib/x86_64-linux-gnu', '-lSDL2'
@@ -45,10 +41,7 @@ kotlin {
                 sdl {
                     switch (hostPreset) {
                         case presets.macosX64:
-                            includeDirs "${MPPTools.localFrameworksPath()}/SDL2.framework/Headers",
-                                    "${MPPTools.systemFrameworksPath()}/SDL2.framework/Headers",
-                                    '/opt/local/include/SDL2',
-                                    '/usr/local/include/SDL2'
+                            includeDirs '/opt/local/include/SDL2', '/usr/local/include/SDL2'
                             break
                         case presets.linuxX64:
                             includeDirs '/usr/include/SDL2'

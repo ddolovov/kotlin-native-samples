@@ -35,12 +35,6 @@ val kotlinNativeDataPath by lazy {
     System.getenv("KONAN_DATA_DIR") ?: Paths.get(userHome, ".konan").toString()
 }
 
-@get:JvmName("systemFrameworksPath")
-val systemFrameworksPath = "/Library/Frameworks"
-
-@get:JvmName("localFrameworksPath")
-val localFrameworksPath by lazy { Paths.get(userHome, "Library/Frameworks").toString() }
-
 // A short-cut for evaluation of the default host Kotlin/Native preset.
 @JvmOverloads
 fun defaultHostPreset(
