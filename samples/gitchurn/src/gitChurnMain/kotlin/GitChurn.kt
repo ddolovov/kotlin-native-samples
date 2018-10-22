@@ -6,25 +6,39 @@
 package sample.gitchurn
 
 import kotlinx.cinterop.*
-import platform.posix.*
-import libgit2.*
+import libgit2.git_time_t
+import platform.posix.ctime
+import platform.posix.time_tVar
 
 fun main(args: Array<String>) {
     if (args.isEmpty())
         return help()
 
     val workDir = args[0]
-    val limit = if (args.size > 1) {
-        args[1].toInt()
-    } else
-        null
 
+    val limit = if (args.size > 1) {
+        val limitRaw = args[1].toIntOrNull()
+        if (limitRaw == null || limitRaw <= 0) {
+            return help("Not a positive integer: $limitRaw")
+        }
+        limitRaw
+    } else
+        Int.MAX_VALUE
+
+    try {
+        calculateChurn(workDir, limit)
+    } catch (e: GitException) {
+        help(e.message)
+    }
+}
+
+private fun calculateChurn(workDir: String, limit: Int) {
     println("Opening…")
     val repository = git.repository(workDir)
     val map = mutableMapOf<String, Int>()
     var count = 0
     val commits = repository.commits()
-    val limited = limit?.let { commits.take(it) } ?: commits
+    val limited = commits.take(limit)
     println("Calculating…")
     limited.forEach { commit ->
         if (count % 100 == 0)
@@ -54,7 +68,7 @@ fun main(args: Array<String>) {
     git.close()
 }
 
-fun git_time_t.format() = memScoped {
+private fun git_time_t.format() = memScoped {
     val commitTime = alloc<time_tVar>()
     commitTime.value = this@format
     ctime(commitTime.ptr)!!.toKString().trim()
@@ -70,6 +84,9 @@ private fun printTree(commit: GitCommit) {
     }
 }
 
-fun help() {
-    println("Working directory should be provided")
+private fun help(errorMessage: String? = null) {
+    errorMessage?.let {
+        println("ERROR: $it")
+    }
+    println("./gitchurn.kexe <work dir> [<limit>]")
 }
