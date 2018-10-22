@@ -2,7 +2,7 @@ buildscript {
     repositories {
         jcenter()
         google()
-        mavenCentral()
+        maven { url 'https://cache-redirector.jetbrains.com/maven-central' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
@@ -16,10 +16,9 @@ buildscript {
 repositories {
     jcenter()
     google()
-    mavenCentral()
+    maven { url 'https://cache-redirector.jetbrains.com/maven-central' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-    maven { url 'https://plugins.gradle.org/m2/' }
 }
 
 apply plugin: 'org.jetbrains.kotlin.multiplatform'

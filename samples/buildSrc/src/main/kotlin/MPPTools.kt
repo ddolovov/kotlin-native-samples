@@ -1,3 +1,8 @@
+/*
+ * Copyright 2010-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license
+ * that can be found in the license/LICENSE.txt file.
+ */
+
 @file:JvmName("MPPTools")
 
 import groovy.lang.Closure
@@ -71,7 +76,7 @@ fun createRunTask(
         target: KotlinTarget,
         configureClosure: Closure<Any>? = null
 ): Task {
-    val task = subproject.tasks.create(name, RunKotlinNativeTask::class.java, subproject, target)
-    task.configure(configureClosure ?: task.emptyConfigureClosure())
+    val task = subproject.tasks.create(name, RunKotlinNativeTask::class.java, target)
+    configureClosure?.let { closure -> task.configure(closure) }
     return task
 }

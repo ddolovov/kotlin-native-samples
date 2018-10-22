@@ -1,3 +1,8 @@
+/*
+ * Copyright 2010-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license
+ * that can be found in the license/LICENSE.txt file.
+ */
+
 import groovy.lang.Closure
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -7,11 +12,11 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import javax.inject.Inject
 
 open class RunKotlinNativeTask @Inject constructor(
-        private val myProject: Project,
         private val myTarget: KotlinTarget
 ): DefaultTask() {
 
     var buildType = "RELEASE"
+    var workingDir: Any = project.projectDir
     private var myArgs: List<String> = emptyList()
     private val myEnvironment: MutableMap<String, Any> = mutableMapOf()
 
@@ -31,16 +36,11 @@ open class RunKotlinNativeTask @Inject constructor(
 
     @TaskAction
     fun run() {
-        myProject.exec {
+        project.exec {
             it.executable = myTarget.compilations.main.getBinary("EXECUTABLE", buildType).toString()
             it.args = myArgs
             it.environment = myEnvironment
-        }
-    }
-
-    internal fun emptyConfigureClosure() = object : Closure<Any>(this) {
-        override fun call(): RunKotlinNativeTask {
-            return this@RunKotlinNativeTask
+            it.workingDir(workingDir)
         }
     }
 }

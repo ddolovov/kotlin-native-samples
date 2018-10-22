@@ -1,3 +1,8 @@
+/*
+ * Copyright 2010-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license
+ * that can be found in the license/LICENSE.txt file.
+ */
+
 package sample.tetris
 
 import kotlinx.cinterop.*
@@ -171,6 +176,10 @@ class SDL_Visualizer(val width: Int, val height: Int): GameFieldVisualizer, User
             throw Error()
         }
         this.renderer = renderer
+
+        // Workaround for Mojave SDL bug, see https://bugzilla.libsdl.org/show_bug.cgi?id=4272
+        SDL_PumpEvents()
+        SDL_SetWindowSize(window, windowWidth, windowHeight)
 
         texture = loadImage(window, renderer, "tetris_all.bmp")
     }
