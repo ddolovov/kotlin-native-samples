@@ -5,7 +5,6 @@
 
 import groovy.lang.Closure
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.TaskAction
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
@@ -41,6 +40,12 @@ open class RunKotlinNativeTask @Inject constructor(
             it.args = myArgs
             it.environment = myEnvironment
             it.workingDir(workingDir)
+        }
+    }
+
+    internal fun emptyConfigureClosure() = object : Closure<Any>(this) {
+        override fun call(): RunKotlinNativeTask {
+            return this@RunKotlinNativeTask
         }
     }
 }
