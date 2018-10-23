@@ -3,7 +3,7 @@
 This example shows how one could perform statistics on Git repository.
 libgit2 is required for this to work (`apt-get install libgit2-dev`).
 
-To build use `../gradlew assemble` or `./build.sh`.
+To build use `../gradlew assemble`.
 
 To run use `../gradlew runProgram` or execute the program directly:
 
