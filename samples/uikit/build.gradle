@@ -22,7 +22,7 @@ task buildAppForXcode {
         }
 
         copy {
-            from file(kotlin.targets.ios.compilations.main.getBinary('EXECUTABLE', getBuiltTypeForXcode()))
+            from file(kotlin.targets.ios.compilations.main.getBinary('EXECUTABLE', getBuildTypeForXcode()))
             into file(getBinaryLocationForXcode().parentFile)
             rename {
                 getBinaryLocationForXcode().name
@@ -33,12 +33,12 @@ task buildAppForXcode {
 
 afterEvaluate {
     if (isCalledFromXcode()) {
-        buildAppForXcode.dependsOn kotlin.targets.ios.compilations.main.linkTaskName('EXECUTABLE', getBuiltTypeForXcode())
+        buildAppForXcode.dependsOn kotlin.targets.ios.compilations.main.linkTaskName('EXECUTABLE', getBuildTypeForXcode())
     }
 }
 
 // If custom preset specified in 'uikit.preset.name' property, then use it for building.
-// Otherwise build for iPhone simulator.
+// Otherwise build for iPhone simulator (by default).
 private Object determinePreset() {
     String presetName = project.hasProperty('uikit.preset.name') ? project.properties['uikit.preset.name'] : 'iosX64'
     Object preset = project.kotlin.presets[presetName]
@@ -50,7 +50,7 @@ private boolean isCalledFromXcode() {
     project.hasProperty('uikit.configuration.name') && project.hasProperty('uikit.binary.location')
 }
 
-private String getBuiltTypeForXcode() {
+private String getBuildTypeForXcode() {
     project.properties['uikit.configuration.name'] as String
 }
 
