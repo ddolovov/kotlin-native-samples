@@ -53,10 +53,3 @@ To build and run it, go to [cliApp](cliApp/) directory and use
 ```
 ../gradlew runProgram
 ```
-
-To build the distribution:
-```
-../gradlew distZip
-```
-(the result will be available as
-`jvm/build/distributions/KotlinCalculator.zip`)
