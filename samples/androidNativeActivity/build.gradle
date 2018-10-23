@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url 'https://cache-redirector.jetbrains.com/maven-central' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -9,13 +9,13 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
 
 repositories {
-    jcenter()
     google()
+    jcenter()
     maven { url 'https://cache-redirector.jetbrains.com/maven-central' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -32,12 +32,12 @@ Map<String, String> libsDirMapping = [
 ]
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId 'com.jetbrains.konan_activity2'
         minSdkVersion 9
-        targetSdkVersion 25
+        targetSdkVersion 28
 
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'

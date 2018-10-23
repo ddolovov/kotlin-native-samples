@@ -4,9 +4,9 @@ This example shows how to build an Android Native Activity. Also, we provide an 
 bridging mechanism for the Java APIs, callable from Native side.
 
 The example will render a textured dodecahedron using OpenGL ES library. It can be rotated with fingers.
-Please make sure that Android SDK version 25 is installed, using Android SDK manager in Android Studio.
+Please make sure that Android SDK version 28 is installed, using Android SDK manager in Android Studio.
 See https://developer.android.com/studio/index.html for more details on Android Studio or
-`$ANDROID_HOME/tools/bin/sdkmanager "platforms;android-25" "build-tools;25.0.2"` from command line.
+`$ANDROID_HOME/tools/bin/sdkmanager "platforms;android-28" "build-tools;28.0.3"` from command line.
 We use JniBridge to call vibration service on the Java side for short tremble on startup.
 
 To build use `ANDROID_HOME=<your path to android sdk> ../gradlew assemble`.
