@@ -55,5 +55,5 @@ private String getBuiltTypeForXcode() {
 }
 
 private File getBinaryLocationForXcode() {
-    new File(project.properties['uikit.binary.location'] as String)
+    file(project.properties['uikit.binary.location'])
 }

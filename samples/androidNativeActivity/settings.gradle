@@ -1,17 +1,17 @@
 // Reuse Kotlin version from the root project.
-def propertiesFile = new File("${rootProject.projectDir}/../gradle.properties")
-if (!propertiesFile.isFile()) {
-    throw new Exception("File $propertiesFile does not exist or is not a file")
+def rootProjectGradlePropertiesFile = file("${rootProject.projectDir}/../gradle.properties")
+if (!rootProjectGradlePropertiesFile.isFile()) {
+    throw new Exception("File $rootProjectGradlePropertiesFile does not exist or is not a file")
 }
 
 def kotlinVersion = null
-propertiesFile.withInputStream { inputStream ->
+rootProjectGradlePropertiesFile.withInputStream { inputStream ->
     def properties = new Properties()
     properties.load(inputStream)
 
     kotlinVersion = properties.getProperty('kotlin_version')
     if (kotlinVersion == null) {
-        throw new Exception("No 'kotlin_version' property in $propertiesFile file")
+        throw new Exception("No 'kotlin_version' property in $rootProjectGradlePropertiesFile file")
     }
 }
 
