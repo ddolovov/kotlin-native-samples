@@ -194,12 +194,12 @@ class Renderer(val container: DisposableContainer,
         try {
             val length = AAsset_getLength(asset)
             val buffer: CArrayPointer<ByteVar> = allocArray(length)
-            if (AAsset_read(asset, buffer, length.convert()) != length) {
+            if (AAsset_read(asset, buffer, length.convert()) != length.toInt()) {
                 throw Error("Error reading asset")
             }
 
-            with(BMPHeader(buffer.rawValue)) {
-                if (magic != 0x4d42.toShort() || zero != 0 || size != length || bits != 24.toShort()) {
+            with(buffer.reinterpret<BMPHeader>().pointed) {
+                if (magic != 0x4d42.toUShort() || zero != 0u || size != length.toUInt() || bits != 24.toUShort()) {
                     throw Error("Error parsing texture file")
                 }
                 val numberOfBytes = width * height * 3
@@ -215,7 +215,7 @@ class Renderer(val container: DisposableContainer,
                 glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND.toFloat())
                 glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, cValuesOf(1.0f, 1.0f, 1.0f, 1.0f))
                 glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height.toInt(), 0, GL_RGB, GL_UNSIGNED_BYTE, data)
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data)
 
             }
         } finally {

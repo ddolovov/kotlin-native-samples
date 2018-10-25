@@ -4,13 +4,13 @@ package = sample.androidnative.bmpformat
 #include <stdint.h>
 
 typedef struct __attribute__((packed)) {
-  int16_t magic;
-  int32_t size;
-  int32_t zero;
-  int8_t padding1[8];
+  uint16_t magic;
+  uint32_t size;
+  uint32_t zero;
+  uint8_t padding1[8];
   int32_t width;
-  int64_t height;
-  int8_t padding2[2];
-  int16_t bits;
-  int8_t padding3[24];
+  int32_t height;
+  uint8_t padding2[2];
+  uint16_t bits;
+  uint8_t padding3[24];
 } BMPHeader;
