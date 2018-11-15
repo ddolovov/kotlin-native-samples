@@ -9,7 +9,7 @@ repositories {
 }
 
 // Determine host preset.
-def hostPreset = MPPTools.defaultHostPreset(project, [kotlin.presets.macosX64, kotlin.presets.linuxX64])
+def hostPreset = MPPTools.defaultHostPreset(project, [kotlin.presets.macosX64, kotlin.presets.linuxX64, kotlin.presets.mingwX64])
 
 kotlin {
     targets {
