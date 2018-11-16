@@ -4,7 +4,7 @@ linkerOpts.osx = -L/opt/local/lib -L/usr/local/opt/curl/lib -lcurl
 linkerOpts.linux = -L/usr/lib64 -L/usr/lib/x86_64-linux-gnu -lcurl
 
 compilerOpts.mingw = -DCURL_STATICLIB
-linkerOpts.mingw = -DCURL_STATICLIB /usr/lib/libcurl.a -pipe -lnghttp2 -lidn2 -liconv -lunistring -lssh2 -lssh2 -lssl -lz -lcrypto -lz -lpsl -lidn2 -liconv -lunistring -lssl -lcrypto -lssl -lz -lcrypto -lz -lgdi32 -L/usr/lib -lgssapi -lheimntlm -lkrb5 -lhx509 -lcom_err -L/usr/lib -lcrypto -lasn1 -lwind -lheimbase -lroken -L/usr/lib -lsqlite3 -lcrypt -lz
+linkerOpts.mingw = -DCURL_STATICLIB -lcurl -pipe -lasn1 -lcom_err -lcrypt -lcrypto -lgdi32 -lgssapi -lheimbase -lheimntlm -lhx509 -liconv -lidn2 -lkrb5 -lnghttp2 -lpsl -lroken -lsqlite3 -lssh2 -lssl -lunistring -lwind -lz
 
 #compilerOpts.mingw = -DCURL_STATICLIB
 #linkerOpts.mingw = -static -DCURL_STATICLIB $(curl-config --static-libs)
