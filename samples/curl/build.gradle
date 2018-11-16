@@ -35,7 +35,7 @@ kotlin {
 }
 
 MPPTools.createRunTask(project, 'runProgram', kotlin.targets.curl) {
-    if (presets.mingwX64 == hostPreset) {
+    if (kotlin.presets.mingwX64 == hostPreset) {
         environment 'PATH': "${MPPTools.msysPath()}/usr/bin"
     }
     args 'https://www.jetbrains.com/'
