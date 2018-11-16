@@ -17,12 +17,10 @@ kotlin {
             compilations.main.outputKinds 'EXECUTABLE'
             compilations.main.entryPoint 'sample.curl.main'
 
-            switch (hostPreset) {
-                case presets.mingwX64:
-                    // Add path path to libcurl:
-                    compilations.main.linkerOpts "-L${MPPTools.msysPath()}/usr/lib", "-L${MPPTools.mingwPath()}/lib"
-                    compilations.main.extraOpts '-Xverbose=object_files', '-Xverbose=linker'
-                    break
+            if (presets.mingwX64 == hostPreset) {
+                // Add path path to libcurl:
+                compilations.main.linkerOpts "-L${MPPTools.msysPath()}/usr/lib", "-L${MPPTools.mingwPath()}/lib"
+                compilations.main.extraOpts '-Xverbose=object_files', '-Xverbose=linker'
             }
         }
     }
@@ -37,7 +35,9 @@ kotlin {
 }
 
 MPPTools.createRunTask(project, 'runProgram', kotlin.targets.curl) {
-    environment 'PATH': "${MPPTools.path()};${MPPTools.msysPath()}/usr/bin"
+    if (presets.mingwX64 == hostPreset) {
+        environment 'PATH': "${MPPTools.msysPath()}/usr/bin"
+    }
     args 'https://www.jetbrains.com/'
 }
 
