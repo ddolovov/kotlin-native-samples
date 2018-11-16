@@ -24,12 +24,6 @@ def hostPreset = MPPTools.defaultHostPreset(project, [kotlin.presets.macosX64, k
 kotlin {
     targets {
         fromPreset(hostPreset, 'libcurl') {
-            switch (hostPreset) {
-                case presets.macosX64:
-                    compilations.main.linkerOpts "-L${MPPTools.msysPath()}/usr/lib"
-                    break
-            }
-
             compilations.main.cinterops {
                 libcurl {
                     switch (hostPreset) {
