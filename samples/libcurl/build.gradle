@@ -26,7 +26,7 @@ kotlin {
         fromPreset(hostPreset, 'libcurl') {
             switch (hostPreset) {
                 case presets.macosX64:
-                    compilations.main.linkerOpts "-L${MPPTools.mingwPath()}/lib"
+                    compilations.main.linkerOpts "-L${MPPTools.msysPath()}/usr/lib"
                     break
             }
 
@@ -40,7 +40,7 @@ kotlin {
                             includeDirs.headerFilterOnly '/usr/include', '/usr/include/x86_64-linux-gnu'
                             break
                         case presets.mingwX64:
-                            includeDirs.headerFilterOnly "${MPPTools.mingwPath()}/include"
+                            includeDirs.headerFilterOnly "${MPPTools.msysPath()}/usr/include"
                             break
                     }
                 }
