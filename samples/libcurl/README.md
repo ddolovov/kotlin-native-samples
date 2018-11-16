@@ -3,7 +3,6 @@
 This example shows how to build and publish an interop library to communicate with the libcurl,
 HTTP/HTTPS/FTP/etc client library.
 
-
 Debian-like distros may need to `apt-get install libcurl4-openssl-dev` or `apt-get install libcurl4-gnutls-dev`.
 Windows-like distros may need to `pacman -S libcurl-devel`.
 
