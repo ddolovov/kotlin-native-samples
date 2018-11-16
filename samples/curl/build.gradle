@@ -37,6 +37,8 @@ kotlin {
 }
 
 MPPTools.createRunTask(project, 'runProgram', kotlin.targets.curl) {
+//    environment 'LD_LIBRARY_PATH': "$tensorflowHome/lib"
+//    environment 'DYLD_LIBRARY_PATH': "$tensorflowHome/lib"
     args 'https://www.jetbrains.com/'
 }
 
