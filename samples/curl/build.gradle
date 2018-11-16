@@ -2,7 +2,7 @@ plugins {
     id 'kotlin-multiplatform'
 }
 
-def localRepo = rootProject.file('build/.m2-repo')
+def localRepo = rootProject.file('build/.m2-local')
 
 repositories {
     maven { url = "file://$localRepo" }
@@ -18,8 +18,8 @@ kotlin {
             compilations.main.entryPoint 'sample.curl.main'
 
             switch (hostPreset) {
-                case presets.macosX64:
-                    // Add floating path to libcurl:
+                case presets.mingwX64:
+                    // Add path path to libcurl:
                     compilations.main.linkerOpts "-L${MPPTools.msysPath()}/usr/lib"
                     break
             }
