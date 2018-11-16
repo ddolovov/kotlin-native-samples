@@ -37,8 +37,7 @@ kotlin {
 }
 
 MPPTools.createRunTask(project, 'runProgram', kotlin.targets.curl) {
-    environment 'LD_LIBRARY_PATH': "${MPPTools.msysPath()}/usr/bin"
-    environment 'DYLD_LIBRARY_PATH': "${MPPTools.msysPath()}/usr/bin"
+    environment 'PATH': "${MPPTools.path()};${MPPTools.msysPath()}/usr/bin"
     args 'https://www.jetbrains.com/'
 }
 
