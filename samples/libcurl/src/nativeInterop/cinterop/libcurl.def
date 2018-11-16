@@ -2,5 +2,5 @@ headers = curl/curl.h
 headerFilter = curl/*
 linkerOpts.osx = -L/opt/local/lib -L/usr/local/opt/curl/lib -lcurl
 linkerOpts.linux = -L/usr/lib64 -L/usr/lib/x86_64-linux-gnu -lcurl
-linkerOpts.mingw = -DCURL_STATICLIB -lcurl
-compilerOpts.mingw = -DCURL_STATICLIB -lcurl
+linkerOpts.mingw = -static -DCURL_STATICLIB -lcurl -lgnutls.dll -lnettle -lgmp -liconv -lintl -lwinmm
+compilerOpts.mingw = -static -DCURL_STATICLIB -lcurl -lgnutls.dll -lnettle -lgmp -liconv -lintl -lwinmm
