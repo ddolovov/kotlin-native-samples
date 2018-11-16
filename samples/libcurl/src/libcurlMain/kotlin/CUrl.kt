@@ -10,7 +10,16 @@ import platform.posix.size_t
 import libcurl.*
 
 class CUrl(url: String)  {
+
+    init {
+        println("Before stable ref")
+    }
+
     private val stableRef = StableRef.create(this)
+
+    init {
+        println("Before curl_easy_init()")
+    }
 
     private val curl = curl_easy_init()
 
