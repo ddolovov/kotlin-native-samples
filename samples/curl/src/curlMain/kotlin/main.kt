@@ -11,6 +11,7 @@ fun main(args: Array<String>) {
     if (args.isEmpty())
         return help()
 
+    println("Before creating curl...")
     val curl = CUrl(args[0])
     curl.header += {
         println("[H] $it")

@@ -15,6 +15,7 @@ class CUrl(url: String)  {
     private val curl = curl_easy_init()
 
     init {
+        println("Initializing...")
         curl_easy_setopt(curl, CURLOPT_URL, url)
         val header = staticCFunction(::header_callback)
         curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header)
@@ -22,6 +23,7 @@ class CUrl(url: String)  {
         val writeData = staticCFunction(::write_callback)
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeData)
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, stableRef.asCPointer())
+        println("Initialized...")
     }
 
     val header = Event<String>()
@@ -32,14 +34,19 @@ class CUrl(url: String)  {
     }
 
     fun fetch() {
+        println("Before fetching...")
         val res = curl_easy_perform(curl)
         if (res != CURLE_OK)
             println("curl_easy_perform() failed: ${curl_easy_strerror(res)?.toKString()}")
+        println("After fetching...")
     }
 
     fun close() {
+        println("Before closing...")
         curl_easy_cleanup(curl)
+        println("Before disposing...")
         stableRef.dispose()
+        println("Done")
     }
 }
 
