@@ -21,6 +21,7 @@ kotlin {
                 case presets.mingwX64:
                     // Add path path to libcurl:
                     compilations.main.linkerOpts "-L${MPPTools.msysPath()}/usr/lib", "-L${MPPTools.mingwPath()}/lib"
+                    compilations.main.extraOpts '-Xverbose=object_files', '-Xverbose=linker'
                     break
             }
         }
